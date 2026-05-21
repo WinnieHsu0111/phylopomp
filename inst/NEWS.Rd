@@ -4,6 +4,7 @@
   \itemize{
     \item Breaking changes in the parameterization of the \code{Strains} model.
     See the manual page.
+    \item New function \code{geneal_scale} allows rescaling and/or shifting of a genealogy's time-scale.
   }
 }
 \section{Changes in \pkg{phylopomp} version 0.18.2}{

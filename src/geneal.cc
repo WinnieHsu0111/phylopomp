@@ -3,7 +3,6 @@
 #include "internal.h"
 
 #include <R.h>
-#include <Rmath.h>
 #include <Rdefines.h>
 
 extern "C" {

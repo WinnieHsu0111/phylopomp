@@ -400,6 +400,14 @@ public:
   //! Parse a Newick string and create the indicated genealogy.
   genealogy_t& parse (const string_t& s);
 
+  void time_rescale (slate_t scale, slate_t origin = 0) {
+    timezero() = scale*(timezero()-origin);
+    for (node_t *p : *this ) {
+      p->slate = scale*(p->slate-origin);
+    }
+    time() = scale*(time()-origin);
+  };
+
 };
 
 #endif
