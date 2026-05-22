@@ -47,26 +47,31 @@ parameter:
     default: 0
     type: double
 ivp:
-  S0:
-    name: S0
-    description: initial size of susceptible population
+  pop:
+    name: pop
+    description: population size
+    type: double
     default: 500
-    type: int
+  S_0:
+    name: S_0
+    description: initial fraction of susceptible population
+    default: 0.96
+    type: double
   I1_0:
     name: I1_0
-    description: initial size of deme-1 infected population
-    default: 10
-    type: int
+    description: initial fraction of deme-1 infected population
+    default: 0.02
+    type: double
   I2_0:
     name: I2_0
-    description: initial size of deme-2 infected population
-    default: 10
-    type: int
-  R0:
-    name: R0
-    description: initial size of immune population
+    description: initial fraction of deme-2 infected population
+    default: 0.02
+    type: double
+  R_0:
+    name: R_0
+    description: initial fraction of immune population
     default: 0
-    type: int
+    type: double
 state:
   S:
     name: S
@@ -80,23 +85,20 @@ state:
   R:
     name: R
     type: int
-  'N':
-    name: 'N'
-    type: double
 rinit: |-
-    state.S = params.S0;
-    state.I1 = params.I1_0;
-    state.I2 = params.I2_0;
-    state.R = params.R0;
-    state.N = double(params.S0+params.I1_0+params.I2_0+params.R0);
-    graft(strain1,params.I1_0);
-    graft(strain2,params.I2_0);
+  double f = params.pop/(params.S_0+params.I1_0+params.I2_0+params.R_0);
+  state.S = nearbyint(f*params.S_0);
+  state.I1 = nearbyint(f*params.I1_0);
+  state.I2 = nearbyint(f*params.I2_0);
+  state.R = nearbyint(f*params.R_0);
+  graft(strain1,state.I1);
+  graft(strain2,state.I2);
 events:
   I1infect:
-    rate: params.Beta1 * state.S * state.I1 / state.N
+    rate: params.Beta1 * state.S * state.I1 / params.pop
     jump: state.S -= 1; state.I1 += 1; birth(strain1,strain1);
   I2infect:
-    rate: params.Beta2 * state.S * state.I2 / state.N
+    rate: params.Beta2 * state.S * state.I2 / params.pop
     jump: state.S -= 1; state.I2 += 1; birth(strain2,strain2);
   I1recov:
     jump: state.I1 -= 1; state.R += 1; death(strain1);

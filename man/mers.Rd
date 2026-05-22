@@ -45,9 +45,9 @@ continueMERS(
 )
 }
 \arguments{
-\item{time}{final time}
+\item{time}{end timepoint of simulation}
 
-\item{t0}{initial time}
+\item{t0}{beginning timepoint of simulation}
 
 \item{Beta_cc}{transmission rate within camels}
 
@@ -81,8 +81,7 @@ continueMERS(
 
 \item{Nh}{human population size}
 
-\item{object}{either the name of the model to simulate
-\emph{or} a previously computed \sQuote{gpsim} object}
+\item{object}{a previously computed simulation}
 }
 \value{
 \code{runMERS} and \code{continueMERS} return objects of class \sQuote{gpsim} with \sQuote{model} attribute \dQuote{MERS}.

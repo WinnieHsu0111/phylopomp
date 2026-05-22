@@ -2,7 +2,6 @@
 ##' @rdname strains
 ##' @include strains.R
 ##' @param x genealogy in \pkg{phylopomp} format (i.e., an object that inherits from \sQuote{gpgen}).
-##' @inheritParams strains
 ##' @details
 ##' \code{strains_pomp} constructs a \sQuote{pomp} object containing a given set of data and the Strains model.
 ##' @return

@@ -56,9 +56,9 @@ strains_pomp(
 )
 }
 \arguments{
-\item{time}{final time}
+\item{time}{end timepoint of simulation}
 
-\item{t0}{initial time}
+\item{t0}{beginning timepoint of simulation}
 
 \item{Beta1}{transmission rate for strain 1}
 
@@ -86,8 +86,7 @@ strains_pomp(
 
 \item{R_0}{initial fraction of population immune}
 
-\item{object}{either the name of the model to simulate
-\emph{or} a previously computed \sQuote{gpsim} object}
+\item{object}{a previously computed simulation}
 
 \item{x}{genealogy in \pkg{phylopomp} format (i.e., an object that inherits from \sQuote{gpgen}).}
 }

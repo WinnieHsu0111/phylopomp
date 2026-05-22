@@ -54,22 +54,22 @@ ivp:
     default: 500
   S0:
     name: S0
-    description: initial size of susceptible population
+    description: initial fraction of susceptible population
     default: 0.98
     type: double
   IL0:
     name: IL0
-    description: initial size of low-spreading population
+    description: initial fraction of low-spreading population
     default: 0.02
     type: double
   IH0:
     name: IH0
-    description: initial size of super-spreading population
+    description: initial fraction of super-spreading population
     default: 0
     type: double
   R0:
     name: R0
-    description: initial size of immune population
+    description: initial fraction of immune population
     default: 0
     type: double
 state:

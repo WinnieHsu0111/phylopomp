@@ -37,9 +37,9 @@ continueSI2R(
 )
 }
 \arguments{
-\item{time}{final time}
+\item{time}{end timepoint of simulation}
 
-\item{t0}{initial time}
+\item{t0}{beginning timepoint of simulation}
 
 \item{Beta}{transmission rate}
 
@@ -57,16 +57,15 @@ continueSI2R(
 
 \item{pop}{population size}
 
-\item{S0}{initial size of susceptible population}
+\item{S0}{initial fraction of susceptible population}
 
-\item{IL0}{initial size of low-spreading population}
+\item{IL0}{initial fraction of low-spreading population}
 
-\item{IH0}{initial size of super-spreading population}
+\item{IH0}{initial fraction of super-spreading population}
 
-\item{R0}{initial size of immune population}
+\item{R0}{initial fraction of immune population}
 
-\item{object}{either the name of the model to simulate
-\emph{or} a previously computed \sQuote{gpsim} object}
+\item{object}{a previously computed simulation}
 }
 \value{
 \code{runSI2R} and \code{continueSI2R} return objects of class \sQuote{gpsim} with \sQuote{model} attribute \dQuote{SI2R}.

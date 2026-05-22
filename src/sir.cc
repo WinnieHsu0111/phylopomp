@@ -11,7 +11,6 @@ typedef struct {
   int S;
   int I;
   int R;
-  double N;
 } sir_state_t;
 
 //! SIR process parameters.
@@ -20,9 +19,10 @@ typedef struct {
   double gamma;
   double psi;
   double omega;
-  int S0;
-  int I0;
-  int R0;
+  double pop;
+  double S0;
+  double I0;
+  double R0;
 } sir_parameters_t;
 
 using sir_proc_t = popul_proc_t<sir_state_t,sir_parameters_t,4>;
@@ -36,14 +36,14 @@ std::string sir_proc_t::yaml (std::string tab) const {
     + YAML_PARAM(gamma)
     + YAML_PARAM(psi)
     + YAML_PARAM(omega)
+    + YAML_PARAM(pop)
     + YAML_PARAM(S0)
     + YAML_PARAM(I0)
     + YAML_PARAM(R0);
   std::string s = tab + "state:\n"
     + YAML_STATE(S)
     + YAML_STATE(I)
-    + YAML_STATE(R)
-    + YAML_STATE(N);
+    + YAML_STATE(R);
   return p+s;
 }
 
@@ -60,6 +60,7 @@ void sir_proc_t::update_params (double *p, int n) {
 template<>
 void sir_proc_t::update_IVPs (double *p, int n) {
   int m = 0;
+  PARAM_SET(pop);
   PARAM_SET(S0);
   PARAM_SET(I0);
   PARAM_SET(R0);
@@ -70,7 +71,7 @@ template<>
 double sir_proc_t::event_rates (double *rate, int n) const {
   int m = 0;
   double total = 0;
-  RATE_CALC(params.Beta * state.S * state.I / state.N);
+  RATE_CALC(params.Beta * state.S * state.I / params.pop);
   RATE_CALC(params.gamma * state.I);
   RATE_CALC(params.psi * state.I);
   RATE_CALC(params.omega * state.R);
@@ -80,11 +81,11 @@ double sir_proc_t::event_rates (double *rate, int n) const {
 
 template<>
 void sir_genealogy_t::rinit (void) {
-  state.S = params.S0;
-  state.I = params.I0;
-  state.R = params.R0;
-  state.N = double(params.S0+params.I0+params.R0);
-  graft(Infected,params.I0);
+  double f = params.pop/(params.S0+params.I0+params.R0);
+  state.S = nearbyint(f*params.S0);
+  state.I = nearbyint(f*params.I0);
+  state.R = nearbyint(f*params.R0);
+  graft(Infected,state.I);
 }
 
 template<>

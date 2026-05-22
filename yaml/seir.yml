@@ -2,6 +2,9 @@ name: SEIR
 description: Classical susceptible-exposed-infected-recovered model
 details: |-
   The population is structured by infection progression.
+  There is an incubation period that must pass before an infected
+  host becomes infectious. The duration of this period is \\eqn{1/\\sigma}.
+  The infectious period is \\eqn{1/\\gamma}.
 demes:
   - Exposed
   - Infectious
@@ -32,26 +35,31 @@ parameter:
     default: 0
     type: double
 ivp:
+  pop:
+    name: pop
+    description: host population size
+    default: 100
+    type: double
   S0:
     name: S0
-    description: initial size of susceptible population
-    default: 100
-    type: int
+    description: initial fraction of population susceptible to infection
+    default: 0.9
+    type: double
   E_0:
     name: E0
-    description: initial size of exposed population
-    default: 5
-    type: int
+    description: initial fraction of population in exposed class
+    default: 0.05
+    type: double
   I_0:
     name: I0
-    description: initial size of infected population
-    default: 5
-    type: int
+    description: initial fraction of population in infectious class
+    default: 0.05
+    type: double
   R0:
     name: R0
-    description: initial size of immune population
+    description: initial fraction of population immune to infection
     default: 0
-    type: int
+    type: double
 state:
   S:
     name: S
@@ -65,20 +73,17 @@ state:
   R:
     name: R
     type: int
-  'N':
-    name: 'N'
-    type: double
 rinit: |-
-    state.S = params.S0;
-    state.E = params.E0;
-    state.I = params.I0;
-    state.R = params.R0;
-    state.N = double(params.S0+params.E0+params.I0+params.R0);
-    graft(Exposed,params.E0);
-    graft(Infectious,params.I0);
+  double f = params.pop/(params.S0+params.E0+params.I0+params.R0);
+  state.S = nearbyint(f*params.S0);
+  state.E = nearbyint(f*params.E0);
+  state.I = nearbyint(f*params.I0);
+  state.R = nearbyint(f*params.R0);
+  graft(Exposed,state.E);
+  graft(Infectious,state.I);
 events:
   infect:
-    rate: params.Beta * state.S * state.I / state.N
+    rate: params.Beta * state.S * state.I / params.pop
     jump: state.S -= 1; state.E += 1; birth(Infectious,Exposed);
   progress:
     jump: state.E -= 1; state.I += 1; migrate(Exposed,Infectious);

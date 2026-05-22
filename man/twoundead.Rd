@@ -5,7 +5,7 @@
 \alias{TwoUndead}
 \alias{runTwoUndead}
 \alias{continueTwoUndead}
-\title{Two-host infection model with waning, immigration, demography, and spillover. Hosts are culled upon sampling with a given probability. This is identical to the TwoSpecies model with the exception that dead lineages are not pruned. Instead, they become \emph{ghosts}.}
+\title{Two-host infection model with waning, immigration, demography, and spillover. Hosts are culled upon sampling with a given probability. This is identical to the TwoSpecies model with the exception that dead lineages are not pruned. Instead, they become *ghosts*.}
 \usage{
 runTwoUndead(
   time,
@@ -60,9 +60,9 @@ continueTwoUndead(
 )
 }
 \arguments{
-\item{time}{final time}
+\item{time}{end timepoint of simulation}
 
-\item{t0}{initial time}
+\item{t0}{beginning timepoint of simulation}
 
 \item{Beta11}{transmission rate within species 1}
 
@@ -112,8 +112,7 @@ continueTwoUndead(
 
 \item{R2_0}{initial size of species 2 immune population}
 
-\item{object}{either the name of the model to simulate
-\emph{or} a previously computed \sQuote{gpsim} object}
+\item{object}{a previously computed simulation}
 }
 \value{
 \code{runTwoUndead} and \code{continueTwoUndead} return objects of class \sQuote{gpsim} with \sQuote{model} attribute \dQuote{TwoUndead}.

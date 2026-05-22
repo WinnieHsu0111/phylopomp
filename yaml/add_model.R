@@ -203,7 +203,9 @@ GENERICS({%name%},{%gen%})
 ##' @aliases {%name%}
 ##' @include getinfo.R
 {%param_descript%}
-##' @inheritParams sir
+##' @param object a previously computed simulation
+##' @param time end timepoint of simulation
+##' @param t0 beginning timepoint of simulation
 ##' @return \code{run{%name%}} and \code{continue{%name%}} return objects of class \sQuote{gpsim} with \sQuote{model} attribute \dQuote{{%name%}}.
 ##'
 NULL
@@ -233,7 +235,8 @@ continue{%name%} <- function (
   x <- .Call(P_revive{%name%},object,params)
   .Call(P_run{%name%},x,time) |>
     structure(model="{%name%}",class=c("gpsim","gpgen"))
-}]" |>
+}
+]" |>
   render(
     name=model$name,
     rdname=tolower(model$name),
@@ -293,13 +296,13 @@ get_userdata_double_t *get_userdata_double;
 get_userdata_int_t *get_userdata_int;
 
 SEXP parse_newick (SEXP, SEXP, SEXP);
-SEXP newick (SEXP, SEXP);
 SEXP getInfo (SEXP);
 SEXP genealSum (SEXP);
 SEXP curtail (SEXP, SEXP, SEXP);
 SEXP yaml (SEXP);
 SEXP gendat (SEXP, SEXP);
 SEXP geneal (SEXP);
+SEXP genealScaleShift (SEXP, SEXP, SEXP);
 
 // for each model, there must be
 // one DECLARATIONS line and one METHODS line.
@@ -309,11 +312,11 @@ SEXP geneal (SEXP);
 static const R_CallMethodDef callMethods[] = {
 {%methods%}
   {"parse_newick", (DL_FUNC) &parse_newick, 3},
-  {"newick", (DL_FUNC) &newick, 2},
   {"curtail", (DL_FUNC) &curtail, 3},
   {"yaml", (DL_FUNC) &yaml, 1},
   {"gendat", (DL_FUNC) &gendat, 2},
   {"geneal", (DL_FUNC) &geneal, 1},
+  {"geneal_scale", (DL_FUNC) &genealScaleShift, 3},
   {NULL, NULL, 0}
 };
 

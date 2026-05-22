@@ -9,7 +9,9 @@
 ##' @param mu per capita event rate
 ##' @param psi per capita sampling rate
 ##' @param n population size
-##' @inheritParams sir
+##' @param object a previously computed simulation
+##' @param time end timepoint of simulation
+##' @param t0 beginning timepoint of simulation
 ##' @return \code{runMoran} and \code{continueMoran} return objects of class \sQuote{gpsim} with \sQuote{model} attribute \dQuote{Moran}.
 ##'
 NULL

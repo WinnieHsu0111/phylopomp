@@ -4,8 +4,8 @@
 ##'
 ##' @name twospecies
 ##' @family Genealogy processes
-##' @include seir.R
 ##' @aliases TwoSpecies
+##' @include getinfo.R
 ##' @param Beta11 transmission rate within species 1
 ##' @param Beta12 transmission from species 2 to species 1
 ##' @param Beta21 transmission from species 1 to species 2
@@ -30,7 +30,9 @@
 ##' @param I2_0 initial size of species 2 infected population
 ##' @param R1_0 initial size of species 1 immune population
 ##' @param R2_0 initial size of species 2 immune population
-##' @inheritParams sir
+##' @param object a previously computed simulation
+##' @param time end timepoint of simulation
+##' @param t0 beginning timepoint of simulation
 ##' @return \code{runTwoSpecies} and \code{continueTwoSpecies} return objects of class \sQuote{gpsim} with \sQuote{model} attribute \dQuote{TwoSpecies}.
 ##'
 NULL

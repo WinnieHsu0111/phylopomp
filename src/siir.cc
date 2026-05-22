@@ -13,7 +13,6 @@ typedef struct {
   int I1;
   int I2;
   int R;
-  double N;
 } siir_state_t;
 
 //! SIIR process parameters.
@@ -26,10 +25,11 @@ typedef struct {
   double sigma12;
   double sigma21;
   double omega;
-  int S0;
-  int I1_0;
-  int I2_0;
-  int R0;
+  double pop;
+  double S_0;
+  double I1_0;
+  double I2_0;
+  double R_0;
 } siir_parameters_t;
 
 using siir_proc_t = popul_proc_t<siir_state_t,siir_parameters_t,9>;
@@ -47,16 +47,16 @@ std::string siir_proc_t::yaml (std::string tab) const {
     + YAML_PARAM(sigma12)
     + YAML_PARAM(sigma21)
     + YAML_PARAM(omega)
-    + YAML_PARAM(S0)
+    + YAML_PARAM(pop)
+    + YAML_PARAM(S_0)
     + YAML_PARAM(I1_0)
     + YAML_PARAM(I2_0)
-    + YAML_PARAM(R0);
+    + YAML_PARAM(R_0);
   std::string s = tab + "state:\n"
     + YAML_STATE(S)
     + YAML_STATE(I1)
     + YAML_STATE(I2)
-    + YAML_STATE(R)
-    + YAML_STATE(N);
+    + YAML_STATE(R);
   return p+s;
 }
 
@@ -77,10 +77,11 @@ void siir_proc_t::update_params (double *p, int n) {
 template<>
 void siir_proc_t::update_IVPs (double *p, int n) {
   int m = 0;
-  PARAM_SET(S0);
+  PARAM_SET(pop);
+  PARAM_SET(S_0);
   PARAM_SET(I1_0);
   PARAM_SET(I2_0);
-  PARAM_SET(R0);
+  PARAM_SET(R_0);
   if (m != n) err("wrong number of initial-value parameters!");
 }
 
@@ -88,8 +89,8 @@ template<>
 double siir_proc_t::event_rates (double *rate, int n) const {
   int m = 0;
   double total = 0;
-  RATE_CALC(params.Beta1 * state.S * state.I1 / state.N);
-  RATE_CALC(params.Beta2 * state.S * state.I2 / state.N);
+  RATE_CALC(params.Beta1 * state.S * state.I1 / params.pop);
+  RATE_CALC(params.Beta2 * state.S * state.I2 / params.pop);
   RATE_CALC(params.gamma * state.I1);
   RATE_CALC(params.gamma * state.I2);
   RATE_CALC(params.psi1 * state.I1);
@@ -103,13 +104,13 @@ double siir_proc_t::event_rates (double *rate, int n) const {
 
 template<>
 void siir_genealogy_t::rinit (void) {
-  state.S = params.S0;
-  state.I1 = params.I1_0;
-  state.I2 = params.I2_0;
-  state.R = params.R0;
-  state.N = double(params.S0+params.I1_0+params.I2_0+params.R0);
-  graft(strain1,params.I1_0);
-  graft(strain2,params.I2_0);
+  double f = params.pop/(params.S_0+params.I1_0+params.I2_0+params.R_0);
+  state.S = nearbyint(f*params.S_0);
+  state.I1 = nearbyint(f*params.I1_0);
+  state.I2 = nearbyint(f*params.I2_0);
+  state.R = nearbyint(f*params.R_0);
+  graft(strain1,state.I1);
+  graft(strain2,state.I2);
 }
 
 template<>

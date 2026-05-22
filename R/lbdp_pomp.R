@@ -3,7 +3,6 @@
 ##' @details
 ##' \code{lbdp_pomp} constructs a \pkg{pomp} object containing a given set of data and a linear birth-death-sampling process.
 ##' @importFrom pomp pomp onestep covariate_table
-##' @inheritParams lbdp_exact
 ##' @export
 lbdp_pomp <- function (x, lambda, mu, psi, chi = 0, n0 = 1)
 {

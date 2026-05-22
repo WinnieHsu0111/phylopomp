@@ -111,16 +111,3 @@ genealogy_t::newick
 {
   return nodeseq_t::newick(time(),timezero(),(ndeme() > 0),extended);
 }
-
-extern "C" {
-
-  //! tree in newick format
-  SEXP newick (SEXP State, SEXP Extended) {
-    PROTECT(Extended = AS_LOGICAL(Extended));
-    bool extended = *LOGICAL(Extended);
-    genealogy_t A(State);
-    UNPROTECT(1);
-    return mkString(A.newick(extended).c_str());
-  }
-
-}

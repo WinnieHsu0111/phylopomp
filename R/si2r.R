@@ -17,11 +17,13 @@
 ##' @param etaL rate of transition from low-spreading to super-spreading behavior
 ##' @param etaH rate of transition from super-spreading to low-spreading behavior
 ##' @param pop population size
-##' @param S0 initial size of susceptible population
-##' @param IL0 initial size of low-spreading population
-##' @param IH0 initial size of super-spreading population
-##' @param R0 initial size of immune population
-##' @inheritParams sir
+##' @param S0 initial fraction of susceptible population
+##' @param IL0 initial fraction of low-spreading population
+##' @param IH0 initial fraction of super-spreading population
+##' @param R0 initial fraction of immune population
+##' @param object a previously computed simulation
+##' @param time end timepoint of simulation
+##' @param t0 beginning timepoint of simulation
 ##' @return \code{runSI2R} and \code{continueSI2R} return objects of class \sQuote{gpsim} with \sQuote{model} attribute \dQuote{SI2R}.
 ##'
 NULL

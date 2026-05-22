@@ -15,9 +15,9 @@ continueMoran(object, time, mu = NA, psi = NA)
 moran_exact(x, n = 100, mu = 1, psi = 1)
 }
 \arguments{
-\item{time}{final time}
+\item{time}{end timepoint of simulation}
 
-\item{t0}{initial time}
+\item{t0}{beginning timepoint of simulation}
 
 \item{mu}{per capita event rate}
 
@@ -25,8 +25,7 @@ moran_exact(x, n = 100, mu = 1, psi = 1)
 
 \item{n}{population size}
 
-\item{object}{either the name of the model to simulate
-\emph{or} a previously computed \sQuote{gpsim} object}
+\item{object}{a previously computed simulation}
 
 \item{x}{genealogy in \pkg{phylopomp} format (i.e., an object that inherits from \sQuote{gpgen}).}
 }
@@ -36,9 +35,7 @@ moran_exact(x, n = 100, mu = 1, psi = 1)
 \code{moran_exact} returns the log likelihood of the genealogy.
 }
 \description{
-The Markov genealogy process induced by the classical Moran process,
-in which birth/death events occur at a constant rate and the
-population size remains constant.
+The Markov genealogy process induced by the classical Moran process, in which birth/death events occur at a constant rate and the population size remains constant.
 }
 \details{
 \code{moran_exact} gives the exact log likelihood of a genealogy under the uniformly-sampled Moran process.

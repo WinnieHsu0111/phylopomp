@@ -13,7 +13,6 @@ typedef struct {
   int E;
   int I;
   int R;
-  double N;
 } seir_state_t;
 
 //! SEIR process parameters.
@@ -23,10 +22,11 @@ typedef struct {
   double gamma;
   double psi;
   double omega;
-  int S0;
-  int E0;
-  int I0;
-  int R0;
+  double pop;
+  double S0;
+  double E0;
+  double I0;
+  double R0;
 } seir_parameters_t;
 
 using seir_proc_t = popul_proc_t<seir_state_t,seir_parameters_t,5>;
@@ -41,6 +41,7 @@ std::string seir_proc_t::yaml (std::string tab) const {
     + YAML_PARAM(gamma)
     + YAML_PARAM(psi)
     + YAML_PARAM(omega)
+    + YAML_PARAM(pop)
     + YAML_PARAM(S0)
     + YAML_PARAM(E0)
     + YAML_PARAM(I0)
@@ -49,8 +50,7 @@ std::string seir_proc_t::yaml (std::string tab) const {
     + YAML_STATE(S)
     + YAML_STATE(E)
     + YAML_STATE(I)
-    + YAML_STATE(R)
-    + YAML_STATE(N);
+    + YAML_STATE(R);
   return p+s;
 }
 
@@ -68,6 +68,7 @@ void seir_proc_t::update_params (double *p, int n) {
 template<>
 void seir_proc_t::update_IVPs (double *p, int n) {
   int m = 0;
+  PARAM_SET(pop);
   PARAM_SET(S0);
   PARAM_SET(E0);
   PARAM_SET(I0);
@@ -79,7 +80,7 @@ template<>
 double seir_proc_t::event_rates (double *rate, int n) const {
   int m = 0;
   double total = 0;
-  RATE_CALC(params.Beta * state.S * state.I / state.N);
+  RATE_CALC(params.Beta * state.S * state.I / params.pop);
   RATE_CALC(params.sigma * state.E);
   RATE_CALC(params.gamma * state.I);
   RATE_CALC(params.psi * state.I);
@@ -90,13 +91,13 @@ double seir_proc_t::event_rates (double *rate, int n) const {
 
 template<>
 void seir_genealogy_t::rinit (void) {
-  state.S = params.S0;
-  state.E = params.E0;
-  state.I = params.I0;
-  state.R = params.R0;
-  state.N = double(params.S0+params.E0+params.I0+params.R0);
-  graft(Exposed,params.E0);
-  graft(Infectious,params.I0);
+  double f = params.pop/(params.S0+params.E0+params.I0+params.R0);
+  state.S = nearbyint(f*params.S0);
+  state.E = nearbyint(f*params.E0);
+  state.I = nearbyint(f*params.I0);
+  state.R = nearbyint(f*params.R0);
+  graft(Exposed,state.E);
+  graft(Infectious,state.I);
 }
 
 template<>

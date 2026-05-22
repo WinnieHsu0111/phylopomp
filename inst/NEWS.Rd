@@ -1,20 +1,20 @@
 \name{NEWS}
 \title{News for package `phylopomp'}
-\section{Changes in \pkg{phylopomp} version 0.18.3}{
+\section{Changes in \pkg{phylopomp} version 0.19}{
   \itemize{
-    \item Breaking changes in the parameterization of the \code{Strains} model.
-    See the manual page.
-    \item New function \code{geneal_scale} allows rescaling and/or shifting of a genealogy's time-scale.
-  }
-}
-\section{Changes in \pkg{phylopomp} version 0.18.2}{
-  \itemize{
+    \item Breaking changes in the parameterizations of the \code{SEIR}, \code{SIIR}, \code{SIR}, and \code{Strains} models.
+    See the manual pages for details.
+    \item The new function \code{geneal_scale} allows rescaling and/or shifting of a genealogy's time-scale.
+    \item The behavior of the \code{geneal_sum} function and the genealogy-addition operator (\code{+}) have changed.
+    The sum is now inclusive rather than exclusive:
+    it expands the time-interval as needed.
+    \strong{NB:} this can have unintended consequences.
     \item There is a new model, \code{MERS}.
-    \item The YAML-translator has been improved and updated.
-    \item Improvements to unit testing.
     \item The \code{SI2R} model has been completely changed.
     It now features two demes, one of which transmits at a rate that is a multiple of the other.
     \item In the \code{SI2R} model, the sampling is assumed to be destructive.
+    \item The YAML-translator has been improved and updated.
+    \item Improvements to unit testing.
   }
 }
 \section{Changes in \pkg{phylopomp} version 0.18}{

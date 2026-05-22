@@ -5,7 +5,7 @@
 \alias{SIIR}
 \alias{runSIIR}
 \alias{continueSIIR}
-\title{Two-strain SIR model.}
+\title{Two-strain SIR model}
 \usage{
 runSIIR(
   time,
@@ -18,10 +18,11 @@ runSIIR(
   sigma12 = 0,
   sigma21 = 0,
   omega = 0,
-  S0 = 500,
-  I1_0 = 10,
-  I2_0 = 10,
-  R0 = 0
+  pop = 500,
+  S_0 = 0.96,
+  I1_0 = 0.02,
+  I2_0 = 0.02,
+  R_0 = 0
 )
 
 continueSIIR(
@@ -38,51 +39,43 @@ continueSIIR(
 )
 }
 \arguments{
-\item{time}{final time}
+\item{time}{end timepoint of simulation}
 
-\item{t0}{initial time}
+\item{t0}{beginning timepoint of simulation}
 
-\item{Beta1, Beta2}{transmission rates from each of the infectious classes.}
+\item{Beta1}{transmission rate for strain 1}
 
-\item{gamma}{recovery rate.}
+\item{Beta2}{transmission rate for strain 2}
 
-\item{psi1, psi2}{sampling rates.}
+\item{gamma}{recovery rate}
 
-\item{sigma12, sigma21}{movement rates from deme 1 to 2 and 2 to 1, respectively}
+\item{psi1}{sampling rate for deme 1}
+
+\item{psi2}{sampling rate for deme 2}
+
+\item{sigma12}{rate of movement from deme 1 to deme 2}
+
+\item{sigma21}{rate of movement from deme 2 to deme 1}
 
 \item{omega}{rate of loss of immunity}
 
-\item{S0}{initial size of susceptible population.}
+\item{pop}{population size}
 
-\item{I1_0}{initial size of I2 population.}
+\item{S_0}{initial fraction of susceptible population}
 
-\item{I2_0}{initial size of I2 population.}
+\item{I1_0}{initial fraction of deme-1 infected population}
 
-\item{R0}{initial size of recovered population.}
+\item{I2_0}{initial fraction of deme-2 infected population}
 
-\item{object}{either the name of the model to simulate
-\emph{or} a previously computed \sQuote{gpsim} object}
+\item{R_0}{initial fraction of immune population}
+
+\item{object}{a previously computed simulation}
 }
 \value{
 \code{runSIIR} and \code{continueSIIR} return objects of class \sQuote{gpsim} with \sQuote{model} attribute \dQuote{SIIR}.
 }
 \description{
 Two distinct pathogen strains compete for susceptibles.
-}
-\examples{
-simulate("SIIR",time=3,psi1=1,psi2=0) |>
-  simulate(Beta1=2,gamma=2,time=10,psi1=10,psi2=1) |>
-  plot()
-
-runSIIR(Beta1=10,Beta2=8,
-  S0=200,I1_0=10,I2_0=8,R0=0,time=0,t0=-1) |>
-  simulate(psi1=10,time=2) |>
-  plot(points=TRUE,obscure=FALSE)
-
-simulate("SIIR",Beta1=2,Beta2=50,gamma=1,psi1=2,
-  S0=300,I1_0=20,I2_0=2,time=5) |>
-  lineages() |>
-  plot()
 }
 \seealso{
 More example genealogy processes:

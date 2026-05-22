@@ -11,7 +11,7 @@
 
   pb <- utils::txtProgressBar(0,2*length(times),0,style=3)
   x <- simulate("SIIR",time=0,Beta1=5,Beta2=10,gamma=1,omega=0.5,
-    psi1=0.2,psi2=0.1,sigma12=1,sigma21=1,S0=200,I1_0=3,I2_0=2)
+    psi1=0.2,psi2=0.1,sigma12=1,sigma21=1,pop=205,S_0=200,I1_0=3,I2_0=2)
 
   img <- 1
   for (k in seq.int(from=1,to=length(times),by=1)) {
@@ -19,15 +19,18 @@
     ggsave(
       filename=png_files[img],
       plot=plot(
-        x, t0=0, time=max(times),
+        x,
         points=FALSE, prune=FALSE, obscure=FALSE,
-        palette=c("#ffcb05","#dddddd"),
+        ladderize=FALSE,
+        palette=c("#000000","#ffcb05","#dddddd"),
         axis.line=element_line(color="white"),
         axis.ticks=element_line(color="white"),
         axis.text=element_blank(),
         plot.background=element_rect(fill=NA,color=NA),
-        panel.background=element_rect(fill=NA,color=NA)
-      ),
+        panel.background=element_rect(fill=NA,color=NA),
+        legend.position="none"
+      )+
+        expand_limits(x=c(0,range(times))),
       device="png",dpi=300,
       height=2,width=3,units="in"
     )
@@ -40,15 +43,18 @@
     ggsave(
       filename=png_files[img],
       plot=plot(
-        x, t0=0, time=max(times),
+        x,
         points=FALSE, prune=FALSE, obscure=FALSE,
-        palette=c("#ffcb05","#dddddd"),
+        ladderize=FALSE,
+        palette=c("#000000","#ffcb05","#dddddd"),
         axis.line=element_line(color="white"),
         axis.ticks=element_line(color="white"),
         axis.text=element_blank(),
         plot.background=element_rect(fill=NA,color=NA),
-        panel.background=element_rect(fill=NA,color=NA)
-      ),
+        panel.background=element_rect(fill=NA,color=NA),
+        legend.position="none"
+      )+
+        expand_limits(x=c(0,range(times))),
       device="png",dpi=300,
       height=2,width=3,units="in"
     )

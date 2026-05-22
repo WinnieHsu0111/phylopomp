@@ -43,20 +43,20 @@ Plots a genealogical tree.
 Tree-plotting in \pkg{phylopomp} depends on the \pkg{ggtree} package.
 }
 \examples{
-simulate("SEIR",Beta=2,sigma=2,gamma=1,psi=2,S0=1000,I0=5,time=5) |>
+simulate("SEIR",Beta=2,sigma=2,gamma=1,psi=2,S0=1,I0=0.01,time=5) |>
   simulate(Beta=5,gamma=2,time=10,psi=3) |>
   plot()
 
-runSEIR(Beta=3,gamma=1,psi=2,S0=20,I0=5,R0=0,time=5,t0=-1) |>
+runSEIR(Beta=3,gamma=1,psi=2,S0=1,I0=0.2,R0=0,time=5,t0=-1) |>
   plot(points=TRUE,obscure=FALSE)
 
-runSEIR(Beta=3,gamma=0.1,psi=0.2,S0=100,I0=5,R0=0,time=2,t0=0) -> x
+runSEIR(Beta=3,gamma=0.1,psi=0.2,S0=1,I0=0.05,R0=0,time=2,t0=0) -> x
 plot_grid(plotlist=list(plot(x,points=TRUE),diagram(x)),
   ncol=1,rel_heights=c(4,1))
 
-simulate("SEIR",sigma=1,omega=1,time=20,I0=4) |> plot(obscure=FALSE)
+simulate("SEIR",sigma=1,omega=1,time=20,I0=0.04) |> plot(obscure=FALSE)
 
-simulate("SEIR",sigma=1,omega=1,time=20,I0=4) |>
+simulate("SEIR",sigma=1,omega=1,time=20,I0=0.04) |>
   lineages(obscure=FALSE) |>
   plot()
 simulate("LBDP",time=4) |> plot(points=TRUE)
@@ -110,7 +110,7 @@ plot_grid(
 
   pb <- utils::txtProgressBar(0,2*length(times),0,style=3)
   x <- simulate("SIIR",time=0,Beta1=5,Beta2=10,gamma=1,omega=0.5,
-    psi1=0.2,psi2=0.1,sigma12=1,sigma21=1,S0=200,I1_0=3,I2_0=2)
+    psi1=0.2,psi2=0.1,sigma12=1,sigma21=1,pop=205,S_0=200,I1_0=3,I2_0=2)
 
   img <- 1
   for (k in seq.int(from=1,to=length(times),by=1)) {
@@ -118,15 +118,18 @@ plot_grid(
     ggsave(
       filename=png_files[img],
       plot=plot(
-        x, t0=0, time=max(times),
+        x,
         points=FALSE, prune=FALSE, obscure=FALSE,
-        palette=c("#ffcb05","#dddddd"),
+        ladderize=FALSE,
+        palette=c("#000000","#ffcb05","#dddddd"),
         axis.line=element_line(color="white"),
         axis.ticks=element_line(color="white"),
         axis.text=element_blank(),
         plot.background=element_rect(fill=NA,color=NA),
-        panel.background=element_rect(fill=NA,color=NA)
-      ),
+        panel.background=element_rect(fill=NA,color=NA),
+        legend.position="none"
+      )+
+        expand_limits(x=c(0,range(times))),
       device="png",dpi=300,
       height=2,width=3,units="in"
     )
@@ -139,15 +142,18 @@ plot_grid(
     ggsave(
       filename=png_files[img],
       plot=plot(
-        x, t0=0, time=max(times),
+        x,
         points=FALSE, prune=FALSE, obscure=FALSE,
-        palette=c("#ffcb05","#dddddd"),
+        ladderize=FALSE,
+        palette=c("#000000","#ffcb05","#dddddd"),
         axis.line=element_line(color="white"),
         axis.ticks=element_line(color="white"),
         axis.text=element_blank(),
         plot.background=element_rect(fill=NA,color=NA),
-        panel.background=element_rect(fill=NA,color=NA)
-      ),
+        panel.background=element_rect(fill=NA,color=NA),
+        legend.position="none"
+      )+
+        expand_limits(x=c(0,range(times))),
       device="png",dpi=300,
       height=2,width=3,units="in"
     )

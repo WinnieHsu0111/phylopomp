@@ -87,9 +87,9 @@ twospecies_pomp(
 )
 }
 \arguments{
-\item{time}{final time}
+\item{time}{end timepoint of simulation}
 
-\item{t0}{initial time}
+\item{t0}{beginning timepoint of simulation}
 
 \item{Beta11}{transmission rate within species 1}
 
@@ -139,8 +139,7 @@ twospecies_pomp(
 
 \item{R2_0}{initial size of species 2 immune population}
 
-\item{object}{either the name of the model to simulate
-\emph{or} a previously computed \sQuote{gpsim} object}
+\item{object}{a previously computed simulation}
 
 \item{x}{genealogy in \pkg{phylopomp} format.}
 }

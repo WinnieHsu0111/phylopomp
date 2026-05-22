@@ -24,7 +24,9 @@
 ##' @param Ih0 initial infected fraction of human population
 ##' @param Nc camel population size
 ##' @param Nh human population size
-##' @inheritParams sir
+##' @param object a previously computed simulation
+##' @param time end timepoint of simulation
+##' @param t0 beginning timepoint of simulation
 ##' @return \code{runMERS} and \code{continueMERS} return objects of class \sQuote{gpsim} with \sQuote{model} attribute \dQuote{MERS}.
 ##'
 NULL

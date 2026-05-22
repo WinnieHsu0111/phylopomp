@@ -9,7 +9,7 @@ dev.off()
 png(filename="diagram-02.png",res=100,
   width=874,height=198,units="px")
 freeze(
-  simulate("SIIR",time=0.3,psi1=1,psi2=1,S0=100),
+  simulate("SIIR",time=0.3,psi1=1,psi2=1,pop=200),
   seed=788520677
 ) |> diagram()
 dev.off()
@@ -17,7 +17,7 @@ dev.off()
 png(filename="diagram-03.png",res=100,
   width=1277,height=134,units="px")
 freeze(
-  simulate("SIIR",time=0.3,psi1=1,psi2=1,S0=100),
+  simulate("SIIR",time=0.3,psi1=1,psi2=1,pop=200),
   seed=459939038
 ) |> diagram(prune=FALSE)
 dev.off()
@@ -25,7 +25,7 @@ dev.off()
 png(filename="diagram-04.png",res=100,
   width=1338,height=134,units="px")
 freeze(
-  simulate("SIIR",time=0.3,psi1=1,psi2=1,S0=100),
+  simulate("SIIR",time=0.3,psi1=1,psi2=1,pop=200),
   seed=459939038
 ) |> diagram(prune=FALSE,obscure=FALSE)
 dev.off()

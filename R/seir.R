@@ -1,16 +1,27 @@
 ##' Classical susceptible-exposed-infected-recovered model
 ##'
 ##' The population is structured by infection progression.
+##' There is an incubation period that must pass before an infected
+##' host becomes infectious. The duration of this period is \eqn{1/\sigma}.
+##' The infectious period is \eqn{1/\gamma}.
 ##'
 ##' @name seir
 ##' @family Genealogy processes
 ##' @aliases SEIR
+##' @include getinfo.R
 ##' @param Beta transmission rate
 ##' @param sigma progression rate
 ##' @param gamma recovery rate
 ##' @param psi per capita sampling rate
 ##' @param omega rate of waning of immunity
-##' @inheritParams sir
+##' @param pop host population size
+##' @param S0 initial fraction of population susceptible to infection
+##' @param E0 initial fraction of population in exposed class
+##' @param I0 initial fraction of population in infectious class
+##' @param R0 initial fraction of population immune to infection
+##' @param object a previously computed simulation
+##' @param time end timepoint of simulation
+##' @param t0 beginning timepoint of simulation
 ##' @return \code{runSEIR} and \code{continueSEIR} return objects of class \sQuote{gpsim} with \sQuote{model} attribute \dQuote{SEIR}.
 ##' @references
 ##' \King2024
@@ -21,15 +32,10 @@ NULL
 ##' @export
 runSEIR <- function (
   time, t0 = 0,
-  Beta = 4, sigma = 1, gamma = 1, psi = 1, omega = 0,
-  S0 = 0.9, E0 = 0.05, I0 = 0.05, R0 = 0, pop = 100
+  Beta = 4, sigma = 1, gamma = 1, psi = 1, omega = 0, pop = 100, S0 = 0.9, E0 = 0.05, I0 = 0.05, R0 = 0
 ) {
   params <- c(Beta=Beta,sigma=sigma,gamma=gamma,psi=psi,omega=omega)
-  ivps <- c(S0,E0,I0,R0)
-  ivps <- structure(
-    as.integer(round(pop*ivps/sum(ivps))),
-    names=c("S0","E0","I0","R0")
-  )
+  ivps <- c(pop=pop,S0=S0,E0=E0,I0=I0,R0=R0)
   if (any(ivps < 0))
     pStop(paste(sQuote(names(ivps)),collapse=","),
       " must be nonnegative.")
@@ -43,7 +49,6 @@ runSEIR <- function (
 runSEIRS <- runSEIR
 
 ##' @rdname seir
-##' @inheritParams simulate
 ##' @export
 continueSEIR <- function (
   object, time,

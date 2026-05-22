@@ -1,20 +1,21 @@
 _N_e_w_s _f_o_r _p_a_c_k_a_g_e '_p_h_y_l_o_p_o_m_p'
 
-_C_h_a_n_g_e_s _i_n '_p_h_y_l_o_p_o_m_p' _v_e_r_s_i_o_n _0._1_8._3:
+_C_h_a_n_g_e_s _i_n '_p_h_y_l_o_p_o_m_p' _v_e_r_s_i_o_n _0._1_9:
 
-        • Breaking changes in the parameterization of the ‘Strains’
-          model.  See the manual page.
+        • Breaking changes in the parameterizations of the ‘SEIR’,
+          ‘SIIR’, ‘SIR’, and ‘Strains’ models.  See the manual pages
+          for details.
 
-        • New function ‘geneal_scale’ allows rescaling and/or shifting
-          of a genealogy's time-scale.
+        • The new function ‘geneal_scale’ allows rescaling and/or
+          shifting of a genealogy's time-scale.
 
-_C_h_a_n_g_e_s _i_n '_p_h_y_l_o_p_o_m_p' _v_e_r_s_i_o_n _0._1_8._2:
+        • The behavior of the ‘geneal_sum’ function and the
+          genealogy-addition operator (‘+’) have changed.  The sum is
+          now inclusive rather than exclusive: it expands the
+          time-interval as needed.  *NB:* this can have unintended
+          consequences.
 
         • There is a new model, ‘MERS’.
-
-        • The YAML-translator has been improved and updated.
-
-        • Improvements to unit testing.
 
         • The ‘SI2R’ model has been completely changed.  It now
           features two demes, one of which transmits at a rate that is
@@ -22,6 +23,10 @@ _C_h_a_n_g_e_s _i_n '_p_h_y_l_o_p_o_m_p' _v_e_r_s_i_o_n
 
         • In the ‘SI2R’ model, the sampling is assumed to be
           destructive.
+
+        • The YAML-translator has been improved and updated.
+
+        • Improvements to unit testing.
 
 _C_h_a_n_g_e_s _i_n '_p_h_y_l_o_p_o_m_p' _v_e_r_s_i_o_n _0._1_8:
 

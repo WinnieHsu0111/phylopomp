@@ -37,7 +37,7 @@ null device
 > png(filename="diagram-02.png",res=100,
 +   width=874,height=198,units="px")
 > freeze(
-+   simulate("SIIR",time=0.3,psi1=1,psi2=1,S0=100),
++   simulate("SIIR",time=0.3,psi1=1,psi2=1,pop=200),
 +   seed=788520677
 + ) |> diagram()
 > dev.off()
@@ -47,7 +47,7 @@ null device
 > png(filename="diagram-03.png",res=100,
 +   width=1277,height=134,units="px")
 > freeze(
-+   simulate("SIIR",time=0.3,psi1=1,psi2=1,S0=100),
++   simulate("SIIR",time=0.3,psi1=1,psi2=1,pop=200),
 +   seed=459939038
 + ) |> diagram(prune=FALSE)
 > dev.off()
@@ -57,7 +57,7 @@ null device
 > png(filename="diagram-04.png",res=100,
 +   width=1338,height=134,units="px")
 > freeze(
-+   simulate("SIIR",time=0.3,psi1=1,psi2=1,S0=100),
++   simulate("SIIR",time=0.3,psi1=1,psi2=1,pop=200),
 +   seed=459939038
 + ) |> diagram(prune=FALSE,obscure=FALSE)
 > dev.off()
@@ -66,23 +66,695 @@ null device
 > 
 > simulate("SIR",time=0.5) |> yaml()
 parameter:
-  Beta: 2.000000
+  Beta: 4.000000
   gamma: 1.000000
   psi: 1.000000
   omega: 0.000000
-  S0: 100
-  I0: 2
-  R0: 0
+  pop: 100.000000
+  S0: 0.950000
+  I0: 0.050000
+  R0: 0.000000
 state:
-  S: 100
-  I: 0
-  R: 2
-  N: 102.000000
+  S: 73
+  I: 23
+  R: 4
 genealogy:
   t0: 0
   time: 0.5
   ndeme: 1
   nodes:
+  - name: 4
+    time: 0
+    deme: 0
+    lineage: 4
+    pocket:
+    - color: green
+      name: 4
+    - color: green
+      name: 12
+  - name: 3
+    time: 0
+    deme: 0
+    lineage: 5
+    pocket:
+    - color: green
+      name: 3
+    - color: green
+      name: 23
+  - name: 2
+    time: 0
+    deme: 0
+    lineage: 0
+    pocket:
+    - color: green
+      name: 2
+    - color: green
+      name: 5
+  - name: 1
+    time: 0
+    deme: 0
+    pocket:
+    - color: green
+      name: 1
+    - color: green
+      name: 16
+  - name: 0
+    time: 0
+    deme: 0
+    lineage: 8
+    pocket:
+    - color: green
+      name: 0
+    - color: green
+      name: 6
+  - name: 5
+    time: 0.04012483528445549
+    deme: 1
+    lineage: 0
+    pocket:
+    - color: green
+      name: 7
+    - color: green
+      name: 19
+  - name: 6
+    time: 0.05312123486611635
+    deme: 1
+    lineage: 8
+    pocket:
+    - color: green
+      name: 8
+  - name: 7
+    time: 0.06571105727869556
+    deme: 1
+    lineage: 0
+    pocket:
+    - color: green
+      name: 9
+    - color: blue
+      name: 7
+  - name: 8
+    time: 0.10154833724308522
+    deme: 1
+    lineage: 8
+    pocket:
+    - color: green
+      name: 10
+    - color: black
+      name: 8
+      deme: 1
+  - name: 9
+    time: 0.11867955816519501
+    deme: 1
+    lineage: 1
+    pocket:
+    - color: green
+      name: 11
+    - color: green
+      name: 15
+  - name: 10
+    time: 0.11885194645484913
+    deme: 1
+    lineage: 8
+    pocket:
+    - color: green
+      name: 21
+    - color: black
+      name: 0
+      deme: 1
+  - name: 11
+    time: 0.1352485704969188
+    deme: 1
+    lineage: 1
+    pocket:
+    - color: green
+      name: 13
+  - name: 12
+    time: 0.1396874864116095
+    deme: 1
+    lineage: 4
+    pocket:
+    - color: green
+      name: 17
+  - name: 13
+    time: 0.1529886099849389
+    deme: 1
+    lineage: 1
+    pocket:
+    - color: green
+      name: 14
+    - color: green
+      name: 25
+  - name: 14
+    time: 0.16185775756828494
+    deme: 1
+    lineage: 1
+    pocket:
+    - color: green
+      name: 18
+    - color: blue
+      name: 14
+  - name: 15
+    time: 0.179097126420291
+    deme: 1
+    lineage: 2
+    pocket:
+    - color: blue
+      name: 15
+    - color: black
+      name: 9
+      deme: 1
+  - name: 16
+    time: 0.20902531574972272
+    deme: 1
+    pocket:
+    - color: green
+      name: 22
+    - color: black
+      name: 1
+      deme: 1
+  - name: 17
+    time: 0.2527502916574309
+    deme: 1
+    lineage: 4
+    pocket:
+    - color: green
+      name: 26
+    - color: black
+      name: 4
+      deme: 1
+  - name: 18
+    time: 0.26640469266856187
+    deme: 1
+    lineage: 3
+    pocket:
+    - color: green
+      name: 20
+  - name: 19
+    time: 0.28353887995306354
+    deme: 1
+    pocket:
+    - color: green
+      name: 24
+    - color: black
+      name: 19
+      deme: 1
+  - name: 20
+    time: 0.28845239733328537
+    deme: 1
+    lineage: 3
+    pocket:
+    - color: green
+      name: 28
+    - color: blue
+      name: 20
+  - name: 21
+    time: 0.2965051473150611
+    deme: 1
+    lineage: 8
+    pocket:
+    - color: green
+      name: 30
+    - color: black
+      name: 10
+      deme: 1
+  - name: 22
+    time: 0.3074024777213367
+    deme: 1
+    pocket:
+    - color: green
+      name: 31
+    - color: black
+      name: 16
+      deme: 1
+  - name: 23
+    time: 0.3564373859761461
+    deme: 1
+    lineage: 5
+    pocket:
+    - color: green
+      name: 27
+    - color: green
+      name: 34
+  - name: 24
+    time: 0.36458145319368823
+    deme: 1
+    pocket:
+    - color: green
+      name: 35
+    - color: black
+      name: 2
+      deme: 1
+  - name: 25
+    time: 0.3661465222749118
+    deme: 1
+    lineage: 7
+    pocket:
+    - color: green
+      name: 29
+    - color: green
+      name: 32
+  - name: 26
+    time: 0.3670329874608116
+    deme: 1
+    lineage: 4
+    pocket:
+    - color: blue
+      name: 26
+    - color: black
+      name: 17
+      deme: 1
+  - name: 27
+    time: 0.3875461773638972
+    deme: 1
+    lineage: 5
+    pocket:
+    - color: blue
+      name: 27
+    - color: black
+      name: 23
+      deme: 1
+  - name: 28
+    time: 0.41197654029881403
+    deme: 1
+    lineage: 6
+    pocket:
+    - color: blue
+      name: 28
+    - color: black
+      name: 18
+      deme: 1
+  - name: 29
+    time: 0.4259959131620694
+    deme: 1
+    pocket:
+    - color: black
+      name: 25
+      deme: 1
+    - color: black
+      name: 29
+      deme: 1
+  - name: 30
+    time: 0.4567781171870743
+    deme: 1
+    lineage: 8
+    pocket:
+    - color: green
+      name: 33
+    - color: black
+      name: 30
+      deme: 1
+  - name: 31
+    time: 0.4672453189665793
+    deme: 1
+    pocket:
+    - color: black
+      name: 22
+      deme: 1
+    - color: black
+      name: 31
+      deme: 1
+  - name: 32
+    time: 0.4760303028320959
+    deme: 1
+    lineage: 7
+    pocket:
+    - color: blue
+      name: 32
+    - color: black
+      name: 13
+      deme: 1
+  - name: 33
+    time: 0.48521903378915726
+    deme: 1
+    lineage: 8
+    pocket:
+    - color: blue
+      name: 33
+    - color: black
+      name: 21
+      deme: 1
+  - name: 34
+    time: 0.49184143080141096
+    deme: 1
+    pocket:
+    - color: black
+      name: 3
+      deme: 1
+    - color: black
+      name: 34
+      deme: 1
+  - name: 35
+    time: 0.4991701085787622
+    deme: 1
+    pocket:
+    - color: black
+      name: 24
+      deme: 1
+    - color: black
+      name: 35
+      deme: 1
+> 
+> simulate("LBDP",time=0.5) |> yaml()
+parameter:
+  lambda: 2.000000
+  mu: 1.000000
+  psi: 1.000000
+  chi: 0.000000
+  n0: 5
+state:
+  n: 8
+genealogy:
+  t0: 0
+  time: 0.5
+  ndeme: 1
+  nodes:
+  - name: 4
+    time: 0
+    deme: 0
+    pocket:
+    - color: green
+      name: 4
+    - color: green
+      name: 6
+  - name: 3
+    time: 0
+    deme: 0
+    lineage: 2
+    pocket:
+    - color: green
+      name: 3
+    - color: green
+      name: 13
+  - name: 2
+    time: 0
+    deme: 0
+    pocket:
+    - color: green
+      name: 2
+    - color: green
+      name: 9
+  - name: 0
+    time: 0
+    deme: 0
+    lineage: 0
+    pocket:
+    - color: green
+      name: 0
+    - color: green
+      name: 5
+  - name: 5
+    time: 0.04681521421088339
+    deme: 1
+    lineage: 0
+    pocket:
+    - color: green
+      name: 7
+    - color: blue
+      name: 5
+  - name: 6
+    time: 0.059746842829272756
+    deme: 1
+    pocket:
+    - color: black
+      name: 4
+      deme: 1
+    - color: black
+      name: 6
+      deme: 1
+  - name: 7
+    time: 0.07196039644170364
+    deme: 1
+    lineage: 1
+    pocket:
+    - color: green
+      name: 8
+  - name: 8
+    time: 0.12925838676347695
+    deme: 1
+    lineage: 1
+    pocket:
+    - color: green
+      name: 12
+    - color: blue
+      name: 8
+  - name: 9
+    time: 0.17194563195603105
+    deme: 1
+    pocket:
+    - color: green
+      name: 10
+    - color: green
+      name: 11
+  - name: 10
+    time: 0.2282291232243923
+    deme: 1
+    pocket:
+    - color: black
+      name: 2
+      deme: 1
+  - name: 11
+    time: 0.30399741642424577
+    deme: 1
+    pocket:
+    - color: black
+      name: 9
+      deme: 1
+    - color: black
+      name: 11
+      deme: 1
+  - name: 12
+    time: 0.41886736036203365
+    deme: 1
+    lineage: 3
+    pocket:
+    - color: green
+      name: 14
+    - color: black
+      name: 12
+      deme: 1
+  - name: 13
+    time: 0.4602862976015653
+    deme: 1
+    lineage: 2
+    pocket:
+    - color: blue
+      name: 13
+    - color: black
+      name: 3
+      deme: 1
+  - name: 14
+    time: 0.4624172160510978
+    deme: 1
+    lineage: 3
+    pocket:
+    - color: blue
+      name: 14
+    - color: black
+      name: 0
+      deme: 1
+> 
+> simulate("LBDP",time=0.5) |> yaml()
+parameter:
+  lambda: 2.000000
+  mu: 1.000000
+  psi: 1.000000
+  chi: 0.000000
+  n0: 5
+state:
+  n: 3
+genealogy:
+  t0: 0
+  time: 0.5
+  ndeme: 1
+  nodes:
+  - name: 4
+    time: 0
+    deme: 0
+    pocket:
+    - color: green
+      name: 4
+    - color: black
+      name: 4
+      deme: 1
+  - name: 3
+    time: 0
+    deme: 0
+    lineage: 0
+    pocket:
+    - color: green
+      name: 3
+    - color: green
+      name: 5
+  - name: 2
+    time: 0
+    deme: 0
+    lineage: 1
+    pocket:
+    - color: green
+      name: 2
+    - color: green
+      name: 7
+  - name: 1
+    time: 0
+    deme: 0
+    pocket:
+    - color: green
+      name: 1
+    - color: green
+      name: 8
+  - name: 5
+    time: 0.01334788757149952
+    deme: 1
+    lineage: 0
+    pocket:
+    - color: green
+      name: 6
+    - color: black
+      name: 3
+      deme: 1
+  - name: 6
+    time: 0.08082652726255038
+    deme: 1
+    lineage: 0
+    pocket:
+    - color: blue
+      name: 6
+  - name: 7
+    time: 0.3391121394765563
+    deme: 1
+    lineage: 1
+    pocket:
+    - color: blue
+      name: 7
+  - name: 8
+    time: 0.3627537429515272
+    deme: 1
+    pocket:
+    - color: black
+      name: 8
+      deme: 1
+> 
+> simulate("LBDP",time=0.5) |> geneal() |> yaml()
+t0: 0
+time: 0.5
+ndeme: 1
+nodes:
+- name: 4
+  time: 0
+  deme: 0
+  pocket:
+  - color: green
+    name: 4
+  - color: green
+    name: 7
+- name: 2
+  time: 0
+  deme: 0
+  pocket:
+  - color: green
+    name: 2
+  - color: black
+    name: 2
+    deme: 1
+- name: 1
+  time: 0
+  deme: 0
+  pocket:
+  - color: green
+    name: 1
+  - color: green
+    name: 5
+- name: 0
+  time: 0
+  deme: 0
+  lineage: 0
+  pocket:
+  - color: green
+    name: 0
+  - color: green
+    name: 6
+- name: 5
+  time: 0.02054526738356799
+  deme: 1
+  pocket:
+  - color: green
+    name: 9
+  - color: black
+    name: 5
+    deme: 1
+- name: 6
+  time: 0.05537113240498248
+  deme: 1
+  lineage: 0
+  pocket:
+  - color: green
+    name: 11
+  - color: black
+    name: 0
+    deme: 1
+- name: 7
+  time: 0.11109710902717314
+  deme: 1
+  pocket:
+  - color: green
+    name: 8
+  - color: black
+    name: 7
+    deme: 1
+- name: 8
+  time: 0.130341696134269
+  deme: 1
+  pocket:
+  - color: green
+    name: 10
+- name: 9
+  time: 0.2699044334634006
+  deme: 1
+  pocket:
+  - color: black
+    name: 1
+    deme: 1
+  - color: black
+    name: 9
+    deme: 1
+- name: 10
+  time: 0.34896177682182716
+  deme: 1
+  pocket:
+  - color: green
+    name: 12
+  - color: black
+    name: 8
+    deme: 1
+- name: 11
+  time: 0.4332501005291773
+  deme: 1
+  lineage: 0
+  pocket:
+  - color: blue
+    name: 11
+  - color: black
+    name: 6
+    deme: 1
+- name: 12
+  time: 0.43429257717743514
+  deme: 1
+  pocket:
+  - color: green
+    name: 13
+  - color: black
+    name: 10
+    deme: 1
+- name: 13
+  time: 0.48558396726465286
+  deme: 1
+  pocket:
+  - color: black
+    name: 12
+    deme: 1
+  - color: black
+    name: 13
+    deme: 1
 > 
 > simulate("LBDP",time=0.5) |> yaml()
 parameter:
@@ -105,588 +777,121 @@ genealogy:
     - color: green
       name: 4
     - color: green
-      name: 11
-  - name: 3
+      name: 5
+  - name: 2
     time: 0
     deme: 0
     lineage: 0
     pocket:
     - color: green
-      name: 3
-    - color: green
-      name: 5
-  - name: 2
-    time: 0
-    deme: 0
-    pocket:
-    - color: green
       name: 2
     - color: green
-      name: 18
+      name: 7
   - name: 1
-    time: 0
-    deme: 0
-    pocket:
-    - color: green
-      name: 1
-    - color: green
-      name: 19
-  - name: 0
     time: 0
     deme: 0
     lineage: 1
     pocket:
     - color: green
-      name: 0
-    - color: green
-      name: 7
-  - name: 5
-    time: 0.001270080846734345
-    deme: 1
-    lineage: 0
-    pocket:
+      name: 1
     - color: green
       name: 6
-    - color: blue
-      name: 5
-  - name: 6
-    time: 0.03144189033191651
-    deme: 1
-    lineage: 3
-    pocket:
-    - color: green
-      name: 16
-  - name: 7
-    time: 0.12319111055945507
-    deme: 1
-    lineage: 1
-    pocket:
-    - color: green
-      name: 8
-  - name: 8
-    time: 0.1972677833491782
-    deme: 1
-    lineage: 1
-    pocket:
-    - color: green
-      name: 9
-    - color: green
-      name: 12
-  - name: 9
-    time: 0.24976037602521228
-    deme: 1
-    lineage: 1
-    pocket:
-    - color: green
-      name: 10
-    - color: green
-      name: 14
-  - name: 10
-    time: 0.2771148522986344
-    deme: 1
-    lineage: 1
-    pocket:
-    - color: green
-      name: 13
-    - color: blue
-      name: 10
-  - name: 11
-    time: 0.2808843522636842
-    deme: 1
-    pocket:
-    - color: black
-      name: 4
-      deme: 1
-  - name: 12
-    time: 0.29055480042552406
-    deme: 1
-    lineage: 2
-    pocket:
-    - color: blue
-      name: 12
-  - name: 13
-    time: 0.32741119252314665
-    deme: 1
-    pocket:
-    - color: black
-      name: 13
-      deme: 1
-  - name: 14
-    time: 0.33324079659726485
-    deme: 1
-    pocket:
-    - color: green
-      name: 15
-    - color: black
-      name: 14
-      deme: 1
-  - name: 15
-    time: 0.3667929499684072
-    deme: 1
-    pocket:
-    - color: black
-      name: 7
-      deme: 1
-    - color: black
-      name: 15
-      deme: 1
-  - name: 16
-    time: 0.4274424395976347
-    deme: 1
-    lineage: 3
-    pocket:
-    - color: green
-      name: 17
-  - name: 17
-    time: 0.4376079611109382
-    deme: 1
-    lineage: 3
-    pocket:
-    - color: blue
-      name: 17
-    - color: black
-      name: 16
-      deme: 1
-  - name: 18
-    time: 0.4828634573815149
-    deme: 1
-    pocket:
-    - color: black
-      name: 2
-      deme: 1
-    - color: black
-      name: 18
-      deme: 1
-  - name: 19
-    time: 0.49011751049570396
-    deme: 1
-    pocket:
-    - color: black
-      name: 1
-      deme: 1
-    - color: black
-      name: 19
-      deme: 1
-> 
-> simulate("LBDP",time=0.5) |> yaml()
-parameter:
-  lambda: 2.000000
-  mu: 1.000000
-  psi: 1.000000
-  chi: 0.000000
-  n0: 5
-state:
-  n: 20
-genealogy:
-  t0: 0
-  time: 0.5
-  ndeme: 1
-  nodes:
-  - name: 4
-    time: 0
-    deme: 0
-    lineage: 1
-    pocket:
-    - color: green
-      name: 4
-    - color: green
-      name: 9
-  - name: 3
-    time: 0
-    deme: 0
-    pocket:
-    - color: green
-      name: 3
-    - color: green
-      name: 17
-  - name: 2
-    time: 0
-    deme: 0
-    lineage: 0
-    pocket:
-    - color: green
-      name: 2
-    - color: green
-      name: 5
-  - name: 1
-    time: 0
-    deme: 0
-    pocket:
-    - color: green
-      name: 1
-    - color: green
-      name: 12
   - name: 0
     time: 0
     deme: 0
     pocket:
     - color: green
       name: 0
-    - color: green
-      name: 18
-  - name: 5
-    time: 0.00277592099737376
-    deme: 1
-    lineage: 0
-    pocket:
-    - color: green
-      name: 6
-    - color: green
-      name: 7
-  - name: 6
-    time: 0.009753603988792747
-    deme: 1
-    pocket:
-    - color: green
-      name: 16
     - color: black
-      name: 6
+      name: 0
       deme: 1
-  - name: 7
-    time: 0.08790899362921023
+  - name: 5
+    time: 0.09232513662543353
     deme: 1
-    lineage: 0
+    pocket:
+    - color: green
+      name: 11
+  - name: 6
+    time: 0.09792100936574814
+    deme: 1
+    lineage: 1
     pocket:
     - color: green
       name: 8
-    - color: black
-      name: 2
-      deme: 1
-  - name: 8
-    time: 0.14698698055009674
+    - color: green
+      name: 9
+  - name: 7
+    time: 0.14513840677131593
     deme: 1
     lineage: 0
     pocket:
     - color: green
       name: 10
     - color: blue
+      name: 7
+  - name: 8
+    time: 0.209725018760057
+    deme: 1
+    pocket:
+    - color: black
       name: 8
+      deme: 1
   - name: 9
-    time: 0.21734642580265723
+    time: 0.2989026046409781
     deme: 1
     lineage: 1
     pocket:
-    - color: green
-      name: 11
     - color: blue
       name: 9
+    - color: black
+      name: 6
+      deme: 1
   - name: 10
-    time: 0.31518714635221984
+    time: 0.34194995900620895
     deme: 1
     pocket:
     - color: green
-      name: 13
+      name: 12
     - color: black
-      name: 7
+      name: 10
       deme: 1
   - name: 11
-    time: 0.32833829608334925
+    time: 0.383143794541791
     deme: 1
     pocket:
     - color: black
-      name: 4
+      name: 5
       deme: 1
     - color: black
       name: 11
       deme: 1
   - name: 12
-    time: 0.3488725798432341
+    time: 0.4348867121277105
     deme: 1
     pocket:
+    - color: green
+      name: 13
     - color: black
-      name: 1
-      deme: 1
-    - color: black
-      name: 12
+      name: 2
       deme: 1
   - name: 13
-    time: 0.4163975419453584
+    time: 0.4365742989885754
     deme: 1
     pocket:
     - color: green
       name: 14
-    - color: black
-      name: 10
-      deme: 1
-  - name: 14
-    time: 0.4272785645537317
-    deme: 1
-    pocket:
-    - color: green
-      name: 15
-    - color: black
-      name: 14
-      deme: 1
-  - name: 15
-    time: 0.44430558692370586
-    deme: 1
-    pocket:
-    - color: green
-      name: 21
     - color: black
       name: 13
       deme: 1
-  - name: 16
-    time: 0.46048709586403846
-    deme: 1
-    pocket:
-    - color: green
-      name: 20
-    - color: black
-      name: 16
-      deme: 1
-  - name: 17
-    time: 0.46117194066844197
-    deme: 1
-    pocket:
-    - color: green
-      name: 19
-    - color: black
-      name: 3
-      deme: 1
-  - name: 18
-    time: 0.47366733627882585
+  - name: 14
+    time: 0.4646675196789762
     deme: 1
     pocket:
     - color: black
-      name: 0
+      name: 12
       deme: 1
     - color: black
-      name: 18
-      deme: 1
-  - name: 19
-    time: 0.4779375747181561
-    deme: 1
-    pocket:
-    - color: black
-      name: 17
-      deme: 1
-    - color: black
-      name: 19
-      deme: 1
-  - name: 20
-    time: 0.4807345949301227
-    deme: 1
-    pocket:
-    - color: black
-      name: 5
-      deme: 1
-    - color: black
-      name: 20
-      deme: 1
-  - name: 21
-    time: 0.4960535548687165
-    deme: 1
-    pocket:
-    - color: black
-      name: 15
-      deme: 1
-    - color: black
-      name: 21
-      deme: 1
-> 
-> simulate("LBDP",time=0.5) |> geneal() |> yaml()
-t0: 0
-time: 0.5
-ndeme: 1
-nodes:
-- name: 3
-  time: 0
-  deme: 0
-  lineage: 1
-  pocket:
-  - color: green
-    name: 3
-  - color: green
-    name: 7
-- name: 2
-  time: 0
-  deme: 0
-  lineage: 2
-  pocket:
-  - color: green
-    name: 2
-  - color: green
-    name: 6
-- name: 1
-  time: 0
-  deme: 0
-  pocket:
-  - color: green
-    name: 1
-  - color: black
-    name: 1
-    deme: 1
-- name: 0
-  time: 0
-  deme: 0
-  lineage: 0
-  pocket:
-  - color: green
-    name: 0
-  - color: green
-    name: 5
-- name: 5
-  time: 0.07569774174642685
-  deme: 1
-  lineage: 0
-  pocket:
-  - color: blue
-    name: 5
-- name: 6
-  time: 0.08553746570412937
-  deme: 1
-  lineage: 2
-  pocket:
-  - color: green
-    name: 8
-  - color: black
-    name: 6
-    deme: 1
-- name: 7
-  time: 0.21741529064204082
-  deme: 1
-  lineage: 1
-  pocket:
-  - color: blue
-    name: 7
-  - color: black
-    name: 3
-    deme: 1
-- name: 8
-  time: 0.2729392256374571
-  deme: 1
-  lineage: 2
-  pocket:
-  - color: green
-    name: 9
-  - color: green
-    name: 10
-- name: 9
-  time: 0.27772535224508765
-  deme: 1
-  lineage: 2
-  pocket:
-  - color: green
-    name: 11
-  - color: blue
-    name: 9
-- name: 10
-  time: 0.3173713134028274
-  deme: 1
-  lineage: 3
-  pocket:
-  - color: blue
-    name: 10
-- name: 11
-  time: 0.33462242768003614
-  deme: 1
-  lineage: 4
-  pocket:
-  - color: blue
-    name: 11
-  - color: black
-    name: 8
-    deme: 1
-> 
-> simulate("LBDP",time=0.5) |> yaml()
-parameter:
-  lambda: 2.000000
-  mu: 1.000000
-  psi: 1.000000
-  chi: 0.000000
-  n0: 5
-state:
-  n: 4
-genealogy:
-  t0: 0
-  time: 0.5
-  ndeme: 1
-  nodes:
-  - name: 4
-    time: 0
-    deme: 0
-    pocket:
-    - color: green
-      name: 4
-    - color: black
-      name: 4
-      deme: 1
-  - name: 3
-    time: 0
-    deme: 0
-    lineage: 1
-    pocket:
-    - color: green
-      name: 3
-    - color: green
-      name: 6
-  - name: 2
-    time: 0
-    deme: 0
-    lineage: 2
-    pocket:
-    - color: green
-      name: 2
-    - color: green
-      name: 8
-  - name: 1
-    time: 0
-    deme: 0
-    pocket:
-    - color: green
-      name: 1
-    - color: green
-      name: 9
-  - name: 0
-    time: 0
-    deme: 0
-    lineage: 0
-    pocket:
-    - color: green
-      name: 0
-    - color: green
-      name: 5
-  - name: 5
-    time: 0.07996710026216629
-    deme: 1
-    lineage: 0
-    pocket:
-    - color: blue
-      name: 5
-  - name: 6
-    time: 0.0857695615109888
-    deme: 1
-    lineage: 1
-    pocket:
-    - color: green
-      name: 7
-    - color: black
-      name: 3
-      deme: 1
-  - name: 7
-    time: 0.15324820120203966
-    deme: 1
-    lineage: 1
-    pocket:
-    - color: blue
-      name: 7
-  - name: 8
-    time: 0.41153381341604556
-    deme: 1
-    lineage: 2
-    pocket:
-    - color: blue
-      name: 8
-    - color: black
-      name: 2
-      deme: 1
-  - name: 9
-    time: 0.43517541689101646
-    deme: 1
-    pocket:
-    - color: black
-      name: 9
+      name: 14
       deme: 1
 > 
 > try(

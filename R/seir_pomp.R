@@ -2,9 +2,6 @@
 ##' @rdname seir
 ##' @include lbdp.R sir.R seir.R
 ##' @param x genealogy in \pkg{phylopomp} format.
-##' @param S0,E0,I0,R0 initial conditions;
-##' non-negative numbers that specify the relative occupancies of the compartments at the inital time.
-##' @param pop host population size
 ##' @return
 ##' \code{seirs_pomp} returns a \sQuote{pomp} object.
 ##' @details

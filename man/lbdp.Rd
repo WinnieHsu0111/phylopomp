@@ -18,9 +18,9 @@ lbdp_pomp(x, lambda, mu, psi, chi = 0, n0 = 1)
 lbdp_exact(x, lambda, mu, psi, chi = 0, n0 = 1)
 }
 \arguments{
-\item{time}{final time}
+\item{time}{end timepoint of simulation}
 
-\item{t0}{initial time}
+\item{t0}{beginning timepoint of simulation}
 
 \item{lambda}{per capita birth rate}
 
@@ -32,8 +32,7 @@ lbdp_exact(x, lambda, mu, psi, chi = 0, n0 = 1)
 
 \item{n0}{population size at time t0}
 
-\item{object}{either the name of the model to simulate
-\emph{or} a previously computed \sQuote{gpsim} object}
+\item{object}{a previously computed simulation}
 
 \item{x}{genealogy in \pkg{phylopomp} format (i.e., an object that inherits from \sQuote{gpgen}).}
 }

@@ -1,10 +1,9 @@
-##' Two-host infection model with waning, immigration, demography, and spillover. Hosts are culled upon sampling with a given probability. This is identical to the TwoSpecies model with the exception that dead lineages are not pruned. Instead, they become \emph{ghosts}.
+##' Two-host infection model with waning, immigration, demography, and spillover. Hosts are culled upon sampling with a given probability. This is identical to the TwoSpecies model with the exception that dead lineages are not pruned. Instead, they become *ghosts*.
 ##'
 ##' The population is structured by infection progression and host species.
 ##'
 ##' @name twoundead
 ##' @family Genealogy processes
-##' @include seir.R
 ##' @aliases TwoUndead
 ##' @include getinfo.R
 ##' @param Beta11 transmission rate within species 1
@@ -31,7 +30,9 @@
 ##' @param I2_0 initial size of species 2 infected population
 ##' @param R1_0 initial size of species 1 immune population
 ##' @param R2_0 initial size of species 2 immune population
-##' @inheritParams sir
+##' @param object a previously computed simulation
+##' @param time end timepoint of simulation
+##' @param t0 beginning timepoint of simulation
 ##' @return \code{runTwoUndead} and \code{continueTwoUndead} return objects of class \sQuote{gpsim} with \sQuote{model} attribute \dQuote{TwoUndead}.
 ##'
 NULL

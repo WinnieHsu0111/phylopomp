@@ -2,9 +2,6 @@
 ##' @rdname sir
 ##' @include sir.R
 ##' @param x genealogy in \pkg{phylopomp} format (i.e., an object that inherits from \sQuote{gpgen}).
-##' @param S0,I0,R0 initial conditions;
-##' non-negative numbers that specify the relative occupancies of the compartments at the inital time.
-##' @param pop host population size
 ##' @details
 ##' \code{sir_pomp} constructs a \sQuote{pomp} object containing a given set of data and a SIR model.
 ##' @return

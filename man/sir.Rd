@@ -5,8 +5,8 @@
 \alias{SIR}
 \alias{SIRS}
 \alias{runSIR}
-\alias{runSIRS}
 \alias{continueSIR}
+\alias{runSIRS}
 \alias{continueSIRS}
 \alias{sir_pomp}
 \alias{sirs_pomp}
@@ -15,27 +15,14 @@
 runSIR(
   time,
   t0 = 0,
-  Beta = 2,
+  Beta = 4,
   gamma = 1,
   psi = 1,
   omega = 0,
-  S0 = 100,
-  I0 = 2,
-  R0 = 0,
-  pop = 102
-)
-
-runSIRS(
-  time,
-  t0 = 0,
-  Beta = 2,
-  gamma = 1,
-  psi = 1,
-  omega = 0,
-  S0 = 100,
-  I0 = 2,
-  R0 = 0,
-  pop = 102
+  pop = 100,
+  S0 = 0.95,
+  I0 = 0.05,
+  R0 = 0
 )
 
 continueSIR(object, time, Beta = NA, gamma = NA, psi = NA, omega = NA)
@@ -43,14 +30,14 @@ continueSIR(object, time, Beta = NA, gamma = NA, psi = NA, omega = NA)
 runSIRS(
   time,
   t0 = 0,
-  Beta = 2,
+  Beta = 4,
   gamma = 1,
   psi = 1,
   omega = 0,
-  S0 = 100,
-  I0 = 2,
-  R0 = 0,
-  pop = 102
+  pop = 100,
+  S0 = 0.95,
+  I0 = 0.05,
+  R0 = 0
 )
 
 continueSIRS(object, time, Beta = NA, gamma = NA, psi = NA, omega = NA)
@@ -60,25 +47,27 @@ sir_pomp(x, Beta, gamma, psi, omega = 0, S0, I0, R0, pop)
 sirs_pomp(x, Beta, gamma, psi, omega = 0, S0, I0, R0, pop)
 }
 \arguments{
-\item{time}{final time}
+\item{time}{end timepoint of simulation}
 
-\item{t0}{initial time}
+\item{t0}{beginning timepoint of simulation}
 
-\item{Beta}{transmission rate.}
+\item{Beta}{transmission rate}
 
-\item{gamma}{recovery rate.}
+\item{gamma}{recovery rate}
 
-\item{psi}{sampling rate.}
+\item{psi}{per capita (nondestructive) sampling rate}
 
-\item{omega}{immunity waning rate}
+\item{omega}{rate of waning of immunity}
 
-\item{S0, I0, R0}{initial conditions;
-non-negative numbers that specify the relative occupancies of the compartments at the inital time.}
+\item{pop}{size of population}
 
-\item{pop}{host population size}
+\item{S0}{initial size of susceptible population}
 
-\item{object}{either the name of the model to simulate
-\emph{or} a previously computed \sQuote{gpsim} object}
+\item{I0}{initial size of infected population}
+
+\item{R0}{initial size of immune population}
+
+\item{object}{a previously computed simulation}
 
 \item{x}{genealogy in \pkg{phylopomp} format (i.e., an object that inherits from \sQuote{gpgen}).}
 }
@@ -94,19 +83,19 @@ A single, unstructured population of hosts.
 \code{sir_pomp} constructs a \sQuote{pomp} object containing a given set of data and a SIR model.
 }
 \examples{
-simulate("SIR",Beta=2,gamma=1,psi=2,S0=1000,I0=5,time=5) |>
+simulate("SIR",Beta=2,gamma=1,psi=2,pop=1000,I0=0.005,time=5) |>
   simulate(Beta=5,gamma=2,time=10,psi=3) |>
   plot()
 
-runSIR(Beta=3,gamma=1,psi=2,S0=20,I0=5,R0=0,time=5,t0=-1) |>
+runSIR(Beta=3,gamma=1,psi=2,pop=25,S0=0.8,I0=0.2,R0=0,time=5,t0=-1) |>
   plot(points=TRUE)
 
-runSIR(Beta=3,gamma=0.1,psi=0.2,S0=100,I0=5,R0=0,time=2,t0=0) -> x
+runSIR(Beta=3,gamma=0.1,psi=0.2,pop=100,S0=1,I0=0.05,R0=0,time=2,t0=0) -> x
 plot_grid(plotlist=list(plot(x,points=TRUE),diagram(x)),
   ncol=1,rel_heights=c(4,1))
 
-simulate("SIRS",omega=1,time=20,I0=4) |> plot()
-simulate("SIRS",omega=1,time=20,I0=4) |> lineages() |> plot()
+simulate("SIRS",omega=1,time=20,I0=0.05) |> plot()
+simulate("SIRS",omega=1,time=20,I0=0.05) |> lineages() |> plot()
 }
 \references{
 \King2024

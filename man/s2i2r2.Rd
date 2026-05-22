@@ -54,70 +54,59 @@ continueS2I2R2(
 )
 }
 \arguments{
-\item{time}{final time}
+\item{time}{end timepoint of simulation}
 
-\item{t0}{initial time}
+\item{t0}{beginning timepoint of simulation}
 
-\item{Beta11, Beta22}{transmission rates within species 1 and 2, respectively}
+\item{Beta11}{transmission rate within species 1}
 
 \item{Beta12}{transmission from species 2 to species 1}
 
-\item{gamma1, gamma2}{recovery rates for species 1 and 2, respectively}
+\item{Beta22}{transmission rate within species 2}
 
-\item{psi1, psi2}{per capita sampling rates}
+\item{gamma1}{species 1 recovery rate}
 
-\item{omega1, omega2}{rates of waning of immunity}
+\item{gamma2}{species 2 recovery rate}
 
-\item{b1, b2}{per capita birth rates}
+\item{psi1}{per capita sampling rate for species 1}
 
-\item{d1, d2}{per capita death rates}
+\item{psi2}{per capita sampling rate for species 2}
 
-\item{iota1, iota2}{infection importation rates}
+\item{omega1}{rate of waning of immunity for species 1}
 
-\item{S1_0, S2_0}{initial sizes of susceptible populations}
+\item{omega2}{rate of waning of immunity for species 2}
 
-\item{I1_0, I2_0}{initial sizes of infected populations}
+\item{b1}{per capita birth rate for species 1}
 
-\item{R1_0, R2_0}{initial sizes of immune populations}
+\item{b2}{per capita birth rate for species 2}
 
-\item{object}{either the name of the model to simulate
-\emph{or} a previously computed \sQuote{gpsim} object}
+\item{d1}{per capita death rate for species 1}
+
+\item{d2}{per capita death rate for species 2}
+
+\item{iota1}{imported infections for species 1}
+
+\item{iota2}{imported infections for species 2}
+
+\item{S1_0}{initial size of species 1 susceptible population}
+
+\item{S2_0}{initial size of species 2 susceptible population}
+
+\item{I1_0}{initial size of species 1 infected population}
+
+\item{I2_0}{initial size of species 2 infected population}
+
+\item{R1_0}{initial size of species 1 immune population}
+
+\item{R2_0}{initial size of species 2 immune population}
+
+\item{object}{a previously computed simulation}
 }
 \value{
 \code{runS2I2R2} and \code{continueS2I2R2} return objects of class \sQuote{gpsim} with \sQuote{model} attribute \dQuote{S2I2R2}.
 }
 \description{
 The population is structured by infection progression and host species.
-}
-\examples{
-runS2I2R2(
-  time=30,
-  iota2=0.01,Beta12=0.1,
-  I1_0=0,I2_0=0,
-  psi1=10,psi2=10,
-  omega1=0.2,
-  b2=0.02,d2=0.02
-) |>
-  freeze(seed=847110120) -> x
-
-plot_grid(
-  x |>
-    plot(
-      obscure=FALSE,
-      palette=c("#000000ff","#440154ff","#21908cff","#ccccccff"),
-      legend.position="inside",
-      legend.position.inside=c(0.7,0.7)
-    ),
-  x |>
-    lineages(obscure=FALSE) |>
-    plot(
-      palette=c("#000000ff","#440154ff","#21908cff","#ccccccff"),
-      legend.position="none"
-    ),
-  ncol=1,
-  align="hv",
-  axis="b"
-)
 }
 \seealso{
 More example genealogy processes:

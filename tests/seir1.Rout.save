@@ -59,7 +59,7 @@ Type 'q()' to quit R.
 +   diagram(obscure=FALSE,prune=TRUE)
 > 
 > try(simulate("SEIR",time=3,omega=1,I0=-0.1))
-Error : in 'runSEIR': 'S0','E0','I0','R0' must be nonnegative.
+Error : in 'runSEIR': 'pop','S0','E0','I0','R0' must be nonnegative.
 > 
 > simulate(
 +   "SEIR",time=3,

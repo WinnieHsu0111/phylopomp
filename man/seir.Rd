@@ -18,11 +18,11 @@ runSEIR(
   gamma = 1,
   psi = 1,
   omega = 0,
+  pop = 100,
   S0 = 0.9,
   E0 = 0.05,
   I0 = 0.05,
-  R0 = 0,
-  pop = 100
+  R0 = 0
 )
 
 runSEIRS(
@@ -33,11 +33,11 @@ runSEIRS(
   gamma = 1,
   psi = 1,
   omega = 0,
+  pop = 100,
   S0 = 0.9,
   E0 = 0.05,
   I0 = 0.05,
-  R0 = 0,
-  pop = 100
+  R0 = 0
 )
 
 continueSEIR(
@@ -63,9 +63,9 @@ continueSEIRS(
 seirs_pomp(x, Beta, sigma, gamma, psi, omega = 0, S0, E0, I0, R0, pop)
 }
 \arguments{
-\item{time}{final time}
+\item{time}{end timepoint of simulation}
 
-\item{t0}{initial time}
+\item{t0}{beginning timepoint of simulation}
 
 \item{Beta}{transmission rate}
 
@@ -77,13 +77,17 @@ seirs_pomp(x, Beta, sigma, gamma, psi, omega = 0, S0, E0, I0, R0, pop)
 
 \item{omega}{rate of waning of immunity}
 
-\item{S0, E0, I0, R0}{initial conditions;
-non-negative numbers that specify the relative occupancies of the compartments at the inital time.}
-
 \item{pop}{host population size}
 
-\item{object}{either the name of the model to simulate
-\emph{or} a previously computed \sQuote{gpsim} object}
+\item{S0}{initial fraction of population susceptible to infection}
+
+\item{E0}{initial fraction of population in exposed class}
+
+\item{I0}{initial fraction of population in infectious class}
+
+\item{R0}{initial fraction of population immune to infection}
+
+\item{object}{a previously computed simulation}
 
 \item{x}{genealogy in \pkg{phylopomp} format.}
 }
@@ -94,25 +98,28 @@ non-negative numbers that specify the relative occupancies of the compartments a
 }
 \description{
 The population is structured by infection progression.
+There is an incubation period that must pass before an infected
+host becomes infectious. The duration of this period is \eqn{1/\sigma}.
+The infectious period is \eqn{1/\gamma}.
 }
 \details{
 \code{seirs_pomp} constructs a \sQuote{pomp} object containing a given set of data and an SEIRS model.
 }
 \examples{
-simulate("SEIR",Beta=2,sigma=2,gamma=1,psi=2,S0=1000,I0=5,time=5) |>
+simulate("SEIR",Beta=2,sigma=2,gamma=1,psi=2,S0=1,I0=0.01,time=5) |>
   simulate(Beta=5,gamma=2,time=10,psi=3) |>
   plot()
 
-runSEIR(Beta=3,gamma=1,psi=2,S0=20,I0=5,R0=0,time=5,t0=-1) |>
+runSEIR(Beta=3,gamma=1,psi=2,S0=1,I0=0.2,R0=0,time=5,t0=-1) |>
   plot(points=TRUE,obscure=FALSE)
 
-runSEIR(Beta=3,gamma=0.1,psi=0.2,S0=100,I0=5,R0=0,time=2,t0=0) -> x
+runSEIR(Beta=3,gamma=0.1,psi=0.2,S0=1,I0=0.05,R0=0,time=2,t0=0) -> x
 plot_grid(plotlist=list(plot(x,points=TRUE),diagram(x)),
   ncol=1,rel_heights=c(4,1))
 
-simulate("SEIR",sigma=1,omega=1,time=20,I0=4) |> plot(obscure=FALSE)
+simulate("SEIR",sigma=1,omega=1,time=20,I0=0.04) |> plot(obscure=FALSE)
 
-simulate("SEIR",sigma=1,omega=1,time=20,I0=4) |>
+simulate("SEIR",sigma=1,omega=1,time=20,I0=0.04) |>
   lineages(obscure=FALSE) |>
   plot()
 }

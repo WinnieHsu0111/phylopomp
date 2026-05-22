@@ -16,7 +16,7 @@ parameter:
     default: 1
   psi:
     name: psi
-    description: per capita sampling rate
+    description: per capita (nondestructive) sampling rate
     default: 1
     type: double
   omega:
@@ -25,43 +25,48 @@ parameter:
     default: 0
     type: double
 ivp:
+  pop:
+    name: pop
+    description: size of population
+    default: 100
+    type: double
   S0:
     name: S0
     description: initial size of susceptible population
-    default: 100
-    type: int
+    default: 0.95
+    type: double
   I1_0:
     name: I0
     description: initial size of infected population
-    default: 5
-    type: int
+    default: 0.05
+    type: double
   R0:
     name: R0
     description: initial size of immune population
-    default: 0
-    type: int
+    default: 0.0
+    type: double
 state:
   S:
     name: S
+    description: susceptible population size
     type: int
   I:
     name: I
+    description: infected population size
     type: int
   R:
     name: R
+    description: removed (immune) population size
     type: int
-  'N':
-    name: 'N'
-    type: double
 rinit: |-
-    state.S = params.S0;
-    state.I = params.I0;
-    state.R = params.R0;
-    state.N = double(params.S0+params.I0+params.R0);
-    graft(Infected,params.I0);
+  double f = params.pop/(params.S0+params.I0+params.R0);
+  state.S = nearbyint(f*params.S0);
+  state.I = nearbyint(f*params.I0);
+  state.R = nearbyint(f*params.R0);
+  graft(Infected,state.I);
 events:
   infect:
-    rate: params.Beta * state.S * state.I / state.N
+    rate: params.Beta * state.S * state.I / params.pop
     jump: state.S -= 1; state.I += 1; birth();
   recov:
     jump: state.I -= 1; state.R += 1; death();
