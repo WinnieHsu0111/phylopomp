@@ -1,5 +1,11 @@
 \name{NEWS}
 \title{News for package `phylopomp'}
+\section{Changes in \pkg{phylopomp} version 0.19.1}{
+  \itemize{
+    \item Fixed bug in \code{seirs_pomp}.
+    \item Change \code{tf} argument of \code{parse_newick} to \code{time} in keeping with usage elsewhere.
+  }
+}
 \section{Changes in \pkg{phylopomp} version 0.19}{
   \itemize{
     \item Breaking changes in the parameterizations of the \code{SEIR}, \code{SIIR}, \code{SIR}, and \code{Strains} models.

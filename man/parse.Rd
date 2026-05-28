@@ -4,7 +4,7 @@
 \alias{parse_newick}
 \title{parse a Newick string}
 \usage{
-parse_newick(x, t0 = 0, tf = NA)
+parse_newick(x, t0 = 0, time = NA)
 }
 \arguments{
 \item{x}{character; the Newick description.
@@ -12,7 +12,7 @@ See Details for specifics.}
 
 \item{t0}{numeric; the root time.}
 
-\item{tf}{numeric; the current or final time.}
+\item{time}{numeric; the current or final time.}
 }
 \value{
 An object of class \dQuote{gpgen}.

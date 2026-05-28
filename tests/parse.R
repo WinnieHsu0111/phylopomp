@@ -95,13 +95,13 @@ stopifnot(
 
 plot_grid(
   x |> newick(prune=TRUE,obscure=FALSE) |>
-    parse_newick(tf=3) |>
+    parse_newick(time=3) |>
     plot()+expand_limits(x=7),
   x |> newick(prune=TRUE,obscure=FALSE) |>
     parse_newick() |>
     plot()+expand_limits(x=7),
   x |> newick(prune=TRUE,obscure=FALSE) |>
-    parse_newick(tf=7) |>
+    parse_newick(time=7) |>
     plot()+expand_limits(x=7),
   align="hv",axis="tblr",
   ncol=1,rel_heights=c(1,1,1)
@@ -118,9 +118,9 @@ r"{(o_9_1:1.000000,b_1_3:1.000000)m_0_0:0.300000;}" |>
    newick(extended=FALSE)
 
 r"{(((:0.1)),[&&PhyloPOMP:deme=2|type=extant]:1.00,(((:0.3,:0.1),),):0.3)a:0.5;}" |>
-   parse_newick(t0=0.5,tf=2) -> x1
+   parse_newick(t0=0.5,time=2) -> x1
 r"{(((:0.1)),chuck[&&PhyloPOMP deme=2]bob[&&PhyloPOMP|type=extant]tim:1.00,(((:0.3,:0.1),),):0.3)a:0.5;}" |>
-   parse_newick(t0=0.5,tf=2) -> x2
+   parse_newick(t0=0.5,time=2) -> x2
 plot_grid(
   plot(x1,obscure=FALSE,prune=FALSE,points=TRUE),
   plot(x2,obscure=FALSE,prune=FALSE,points=TRUE),

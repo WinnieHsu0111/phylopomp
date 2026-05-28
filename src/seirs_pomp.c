@@ -153,7 +153,6 @@ void seirs_gill
   double *color = &COLOR;
   const int nsample = *get_userdata_int("nsample");
   const int *nodetype = get_userdata_int("nodetype");
-  const int *nodedeme = get_userdata_int("deme");
   const int *lineage = get_userdata_int("lineage");
   const int *sat = get_userdata_int("saturation");
   const int *index = get_userdata_int("index");
@@ -169,7 +168,6 @@ void seirs_gill
 
   int parlin = lineage[parent];
   int parcol = color[parlin];
-  int deme = nodedeme[parent];
   assert(parlin >= 0 && parlin < nsample);
 
   ll = 0;
@@ -210,8 +208,7 @@ void seirs_gill
     break;
   case 1:                       // sample
     // If parent is not in deme I, likelihood = 0.
-    assert(deme==Infected);
-    if (parcol != deme) {
+    if (parcol != Infected) {
       ll += R_NegInf;
       color[parlin] = Infected;
       // the following keeps the state valid

@@ -6,7 +6,7 @@
 ##' @param x character; the Newick description.
 ##' See Details for specifics.
 ##' @param t0 numeric; the root time.
-##' @param tf numeric; the current or final time.
+##' @param time numeric; the current or final time.
 ##' @importFrom tibble tibble
 ##' @details
 ##' \code{parse_newick} parses a string containing information in a (possibly extended) Newick format and returns a \pkg{phylopomp} genealogy.
@@ -21,7 +21,7 @@
 ##' An object of class \dQuote{gpgen}.
 ##' @rdname parse
 ##' @export
-parse_newick <- function (x, t0 = 0, tf = NA) {
-  .Call(P_parse_newick,x,t0,tf) |>
+parse_newick <- function (x, t0 = 0, time = NA) {
+  .Call(P_parse_newick,x,t0,time) |>
     structure(class="gpgen")
 }
