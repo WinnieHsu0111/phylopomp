@@ -18,6 +18,7 @@ SEXP genealScaleShift (SEXP, SEXP, SEXP);
 // for each model, there must be
 // one DECLARATIONS line and one METHODS line.
 
+DECLARATIONS(BDSS);
 DECLARATIONS(LBDP);
 DECLARATIONS(MERS);
 DECLARATIONS(Moran);
@@ -31,6 +32,7 @@ DECLARATIONS(TwoSpecies);
 DECLARATIONS(TwoUndead);
 
 static const R_CallMethodDef callMethods[] = {
+  METHODS(BDSS),
   METHODS(LBDP),
   METHODS(MERS),
   METHODS(Moran),

@@ -21,6 +21,7 @@ Collate:
     'package.R'
     'geneal.R'
     'getinfo.R'
+    'bdss.R'
     'curtail.R'
     'plot.R'
     'diagram.R'
@@ -54,3 +55,4 @@ Collate:
     'twoundead.R'
     'yaml.R'
 Config/roxygen2/version: 8.0.0
+RoxygenNote: 7.3.3

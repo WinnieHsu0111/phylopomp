@@ -3,7 +3,7 @@
 ##' Simulate Markov genealogy processes
 ##'
 ##' @name simulate
-##' @include getinfo.R seir.R sir.R siir.R si2r.R lbdp.R moran.R
+##' @include getinfo.R bdss.R seir.R sir.R siir.R si2r.R lbdp.R moran.R
 ##' @family Genealogy processes
 ##' @param object either the name of the model to simulate
 ##' \emph{or} a previously computed \sQuote{gpsim} object
@@ -28,6 +28,7 @@ simulate.default <- function (object, ...) {
   if (missing(object) || is.null(object))
     message(
       "Available phylopomp models:\n",
+      "- BDSS: Linear birth-death with superspreading\n",
       "- LBDP: Linear birth-death-sampling model\n",
       "- MERS: Two-host infection model with spillover and demography. Hosts are culled upon sampling.\n",
       "- Moran: The classical Moran model\n",
@@ -58,6 +59,7 @@ simulate.default <- function (object, ...) {
 simulate.character <- function (object, time, ...) {
   switch(
     paste0("model",object),
+    modelBDSS = runBDSS(time=time,...),
     modelLBDP = runLBDP(time=time,...),
     modelMERS = runMERS(time=time,...),
     modelMoran = runMoran(time=time,...),
@@ -88,6 +90,7 @@ simulate.gpsim <- function (object, time, ...) {
   model <- as.character(attr(object,"model"))
   switch(
     paste0("model",model),
+    modelBDSS = continueBDSS(object,time=time,...),
     modelLBDP = continueLBDP(object,time=time,...),
     modelMERS = continueMERS(object,time=time,...),
     modelMoran = continueMoran(object,time=time,...),

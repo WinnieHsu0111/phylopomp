@@ -1,0 +1,87 @@
+name: BDSS
+description: Linear birth-death with superspreading
+details: |-
+  Two-deme linear birth-death process with heterogeneous per-lineage transmission rates.
+  Compatible with the BDSS model of Voznica et al. and structured birth-death models of Stadler.
+demes:
+  - normal
+  - superspreader
+parameter:
+  la_nn:
+    name: la_nn
+    description: normal-to-normal transmission rate
+    type: double
+    default: 0.1
+  la_ns:
+    name: la_ns
+    description: normal-to-superspreader transmission rate
+    type: double
+    default: 0.3
+  la_sn:
+    name: la_sn
+    description: superspreader-to-normal transmission rate
+    type: double
+    default: 0.5
+  la_ss:
+    name: la_ss
+    description: superspreader-to-superspreader transmission rate
+    type: double
+    default: 1.5
+  mu:
+    name: mu
+    description: per capita removal rate
+    type: double
+    default: 0.25
+  p:
+    name: p
+    description: probability of sampling upon removal
+    type: double
+    default: 0.3
+ivp:
+  IN0:
+    name: IN0
+    description: initial number of normal spreaders
+    default: 1
+    type: int
+  IS0:
+    name: IS0
+    description: initial number of superspreaders
+    default: 0
+    type: int
+state:
+  IN:
+    name: IN
+    type: int
+  IS:
+    name: IS
+    type: int
+rinit: |-
+    state.IN = params.IN0;
+    state.IS = params.IS0;
+    graft(normal, params.IN0);
+    if (params.IS0 > 0) graft(superspreader, params.IS0);
+events:
+  birth_nn:
+    rate: params.la_nn * state.IN
+    jump: state.IN += 1; birth(normal, normal);
+  birth_ns:
+    rate: params.la_ns * state.IN
+    jump: state.IS += 1; birth(normal, superspreader);
+  birth_sn:
+    rate: params.la_sn * state.IS
+    jump: state.IN += 1; birth(superspreader, normal);
+  birth_ss:
+    rate: params.la_ss * state.IS
+    jump: state.IS += 1; birth(superspreader, superspreader);
+  death_n:
+    rate: params.mu * (1 - params.p) * state.IN
+    jump: state.IN -= 1; death(normal);
+  death_s:
+    rate: params.mu * (1 - params.p) * state.IS
+    jump: state.IS -= 1; death(superspreader);
+  sample_death_n:
+    rate: params.mu * params.p * state.IN
+    jump: state.IN -= 1; sample_death(normal);
+  sample_death_s:
+    rate: params.mu * params.p * state.IS
+    jump: state.IS -= 1; sample_death(superspreader);
