@@ -16,6 +16,7 @@ NULL
 yaml <- function (object) {
   switch(
     paste0("model",as.character(attr(object,"model"))),
+    modelBDEI = .Call(P_yamlBDEI,object),
     modelBDSS = .Call(P_yamlBDSS,object),
     modelLBDP = .Call(P_yamlLBDP,object),
     modelMERS = .Call(P_yamlMERS,object),

@@ -21,6 +21,7 @@ Collate:
     'package.R'
     'geneal.R'
     'getinfo.R'
+    'bdei.R'
     'bdss.R'
     'curtail.R'
     'plot.R'

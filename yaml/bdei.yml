@@ -1,0 +1,67 @@
+name: BDEI
+description: Linear birth-death with exposed and infectious classes
+details: |-
+  Two-deme linear birth-death process with exposed (incubating) and infectious lineages.
+  Transmission creates exposed offspring from infectious donors; exposed lineages progress to infectious.
+  Removal and Stadler sampling-on-removal apply to infectious lineages only.
+  Compatible with the BDEI model of Voznica et al. and structured linear birth-death theory.
+demes:
+  - exposed
+  - infectious
+parameter:
+  mu:
+    name: mu
+    description: per capita progression rate from exposed to infectious
+    type: double
+    default: 1.0
+  la:
+    name: la
+    description: per capita transmission rate from infectious to exposed
+    type: double
+    default: 0.5
+  psi:
+    name: psi
+    description: per capita removal rate of infectious lineages
+    type: double
+    default: 0.25
+  p:
+    name: p
+    description: probability of sampling upon infectious removal
+    type: double
+    default: 0.3
+ivp:
+  IE0:
+    name: IE0
+    description: initial number of exposed lineages
+    default: 0
+    type: int
+  II0:
+    name: II0
+    description: initial number of infectious lineages
+    default: 1
+    type: int
+state:
+  IE:
+    name: IE
+    type: int
+  II:
+    name: II
+    type: int
+rinit: |-
+    state.IE = params.IE0;
+    state.II = params.II0;
+    if (params.IE0 > 0) graft(exposed, params.IE0);
+    graft(infectious, params.II0);
+events:
+  progress:
+    rate: params.mu * state.IE
+    jump: state.IE -= 1; state.II += 1; migrate(exposed, infectious);
+  birth:
+    rate: params.la * state.II
+    jump: state.IE += 1; birth(infectious, exposed);
+  death:
+    rate: params.psi * (1 - params.p) * state.II
+    jump: state.II -= 1; death(infectious);
+  sample_death:
+    rate: params.psi * params.p * state.II
+    jump: state.II -= 1; sample_death(infectious);
