@@ -16,6 +16,12 @@ stopifnot(
   is.finite(max(getInfo(y, time=TRUE)$time))
 )
 
+runBDEI(time=2, mu=2, la=1, psi=0.5, p=0.2, IE0=3, II0=1) -> w
+stopifnot(
+  attr(w, "model") == "BDEI",
+  is.finite(max(getInfo(w, time=TRUE)$time))
+)
+
 z <- continueBDEI(y, time=6)
 stopifnot(attr(z, "model") == "BDEI")
 

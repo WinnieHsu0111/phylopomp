@@ -16,6 +16,12 @@ stopifnot(
   is.finite(max(getInfo(y, time=TRUE)$time))
 )
 
+runBDSS(time=2, la_nn=0.2, la_ss=2, mu=0.5, p=0.2, IN0=1, IS0=3) -> w
+stopifnot(
+  attr(w, "model") == "BDSS",
+  is.finite(max(getInfo(w, time=TRUE)$time))
+)
+
 z <- continueBDSS(y, time=6)
 stopifnot(attr(z, "model") == "BDSS")
 
