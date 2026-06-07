@@ -1,5 +1,4 @@
 library(phylopomp)
-set.seed(101)
 
-runBDEI(time=2, pop=2, fe=0, fi=1) |>
+runBDEI(time=10, pop=2, E0=0.5, I0=0.5) |>
   plot()

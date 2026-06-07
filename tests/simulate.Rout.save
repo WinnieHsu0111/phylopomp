@@ -43,6 +43,8 @@ Error : no model attribute detected.
 Error : no model attribute detected.
 > simulate()
 Available phylopomp models:
+- BDEI: Linear birth-death with exposed and infectious classes
+- BDSS: Linear birth-death with superspreading
 - LBDP: Linear birth-death-sampling model
 - MERS: Two-host infection model with spillover and demography. Hosts are culled upon sampling.
 - Moran: The classical Moran model

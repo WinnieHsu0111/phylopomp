@@ -1,0 +1,81 @@
+
+R version 4.5.3 (2026-03-11) -- "Reassured Reassurer"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> png(filename="bdei-%02d.png",res=100)
+> 
+> options(digits=3)
+> suppressPackageStartupMessages({
++   library(phylopomp)
++ })
+> set.seed(20260605)
+> 
+> x <- runBDEI(time=50,pop=1)
+> stopifnot(
++   attr(x, "model") == "BDEI",
++   inherits(x, "gpsim")
++ )
+> 
+> plot_grid(
++   plot(x,prune=FALSE),
++   x |> lineages(prune=FALSE) |> plot(),
++   ncol=1
++ )
+> 
+> y <- simulate(
++   "BDEI", time=5, sigma=1, lambda=2,
++   mu=0.125, chi=0.125, pop=2, E0=0, I0=1
++ )
+> stopifnot(
++   attr(y, "model") == "BDEI",
++   is.finite(max(getInfo(y, time=TRUE)$time))
++ )
+> 
+> y <- continueBDEI(y, time=6)
+> stopifnot(attr(y, "model") == "BDEI")
+> plot(y)
+> 
+> runBDEI(
++   time=2, sigma=2, lambda=1,
++   mu=0.4, chi=0.1, pop=4,
++   E0=3, I0=1
++ ) -> w
+> stopifnot(
++   attr(w, "model") == "BDEI",
++   is.finite(max(getInfo(w, time=TRUE)$time))
++ )
+> 
+> y |> yaml() -> yaml_out
+> stopifnot(
++   inherits(yaml_out, "gpyaml"),
++   grepl("lambda", yaml_out)
++ )
+> 
+> yaml_out |>
++   strsplit(split="\n") |>
++   getElement(1) |>
++   head(n=12)
+ [1] "parameter:"         "  sigma: 1.000000"  "  lambda: 2.000000"
+ [4] "  mu: 0.125000"     "  chi: 0.125000"    "  pop: 2.000000"   
+ [7] "  E0: 0.000000"     "  I0: 1.000000"     "state:"            
+[10] "  E: 364"           "  I: 337"           "genealogy:"        
+> 
+> dev.off()
+null device 
+          1 
+> 

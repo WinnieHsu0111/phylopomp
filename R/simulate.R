@@ -3,7 +3,7 @@
 ##' Simulate Markov genealogy processes
 ##'
 ##' @name simulate
-##' @include getinfo.R bdei.R bdss.R seir.R sir.R siir.R si2r.R lbdp.R moran.R
+##' @include getinfo.R seir.R sir.R siir.R si2r.R lbdp.R moran.R
 ##' @family Genealogy processes
 ##' @param object either the name of the model to simulate
 ##' \emph{or} a previously computed \sQuote{gpsim} object

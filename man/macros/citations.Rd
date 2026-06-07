@@ -15,4 +15,6 @@
 
 \newcommand{\King2022}{A. A. King, Q. Lin, and E. L. Ionides. Markov genealogy processes. \emph{Theoretical Population Biology} \bold{143}, 77--91, 2022. \doi{10.1016/j.tpb.2021.11.003}.}
 
+\newcommand{\Voznica2022}{J. Voznica, A. Zhukova, V. Boskova, E. Saulnier, F. Lemoine, M. Moslonka-Lefebvre, O. Gascuel. Deep learning from phylogenies to uncover the epidemiological dynamics of outbreaks. \emph{Nature Communications} \bold{13}, 3896, 2022. \doi{10.1038/s41467-022-31511-0}.}
+
 \newcommand{\Yu2017}{G. Yu, D. K. Smith, H. Zhu, Y. Guan, T. T. Y. Lam. \pkg{ggtree}: an \R package for visualization and annotation of phylogenetic trees with their covariates and other associated data. \emph{Methods in Ecology and Evolution} \bold{8}, 28--36, 2017. \doi{10.1111/2041-210X.12628}.}

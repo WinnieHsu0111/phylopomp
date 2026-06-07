@@ -88,44 +88,44 @@ double bdss_proc_t::event_rates (double *rate, int n) const {
 template<>
 void bdss_genealogy_t::rinit (void) {
   double denom = params.fn + params.fs;
-if (denom > 0) {
-  state.IN = nearbyint((params.fn * params.pop) / denom);
-  state.IS = nearbyint((params.fs * params.pop) / denom);
-} else {
-  state.IN = 1;
-  state.IS = 0;
-}
-if (state.IN > 0) graft(normal, state.IN);
-if (state.IS > 0) graft(superspreader, state.IS);
+  if (denom > 0) {
+    state.IN = nearbyint((params.fn * params.pop) / denom);
+    state.IS = nearbyint((params.fs * params.pop) / denom);
+  } else {
+    state.IN = 1;
+    state.IS = 0;
+  }
+  if (state.IN > 0) graft(normal, state.IN);
+  if (state.IS > 0) graft(superspreader, state.IS);
 }
 
 template<>
 void bdss_genealogy_t::jump (int event) {
   switch (event) {
   case 0:
-      state.IN += 1; birth(normal, normal);
-      break;
-    case 1:
-      state.IS += 1; birth(normal, superspreader);
-      break;
-    case 2:
-      state.IN += 1; birth(superspreader, normal);
-      break;
-    case 3:
-      state.IS += 1; birth(superspreader, superspreader);
-      break;
-    case 4:
-      state.IN -= 1; death(normal);
-      break;
-    case 5:
-      state.IS -= 1; death(superspreader);
-      break;
-    case 6:
-      state.IN -= 1; sample_death(normal);
-      break;
-    case 7:
-      state.IS -= 1; sample_death(superspreader);
-      break;
+    state.IN += 1; birth(normal, normal);
+    break;
+  case 1:
+    state.IS += 1; birth(normal, superspreader);
+    break;
+  case 2:
+    state.IN += 1; birth(superspreader, normal);
+    break;
+  case 3:
+    state.IS += 1; birth(superspreader, superspreader);
+    break;
+  case 4:
+    state.IN -= 1; death(normal);
+    break;
+  case 5:
+    state.IS -= 1; death(superspreader);
+    break;
+  case 6:
+    state.IN -= 1; sample_death(normal);
+    break;
+  case 7:
+    state.IS -= 1; sample_death(superspreader);
+    break;
   default:                      // #nocov
     assert(0);                  // #nocov
     break;                      // #nocov

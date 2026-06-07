@@ -1,32 +1,55 @@
+png(filename="bdei-%02d.png",res=100)
+
 options(digits=3)
 suppressPackageStartupMessages({
   library(phylopomp)
 })
 set.seed(20260605)
 
-x <- runBDEI(time=5)
+x <- runBDEI(time=50,pop=1)
 stopifnot(
   attr(x, "model") == "BDEI",
   inherits(x, "gpsim")
 )
 
-y <- simulate("BDEI", time=3, mu=1, lambda_ie=0.5, psi=0.25, p=0.5, pop=2, fe=0, fi=1)
+plot_grid(
+  plot(x,prune=FALSE),
+  x |> lineages(prune=FALSE) |> plot(),
+  ncol=1
+)
+
+y <- simulate(
+  "BDEI", time=5, sigma=1, lambda=2,
+  mu=0.125, chi=0.125, pop=2, E0=0, I0=1
+)
 stopifnot(
   attr(y, "model") == "BDEI",
   is.finite(max(getInfo(y, time=TRUE)$time))
 )
 
-runBDEI(time=2, mu=2, lambda_ie=1, psi=0.5, p=0.2, pop=4, fe=0.75, fi=0.25) -> w
+y <- continueBDEI(y, time=6)
+stopifnot(attr(y, "model") == "BDEI")
+plot(y)
+
+runBDEI(
+  time=2, sigma=2, lambda=1,
+  mu=0.4, chi=0.1, pop=4,
+  E0=3, I0=1
+) -> w
 stopifnot(
   attr(w, "model") == "BDEI",
   is.finite(max(getInfo(w, time=TRUE)$time))
 )
 
-z <- continueBDEI(y, time=6)
-stopifnot(attr(z, "model") == "BDEI")
-
 y |> yaml() -> yaml_out
 stopifnot(
   inherits(yaml_out, "gpyaml"),
-  grepl("lambda_ie", yaml_out)
+  grepl("lambda", yaml_out)
 )
+
+yaml_out |>
+  strsplit(split="\n") |>
+  getElement(1) |>
+  head(n=12)
+
+dev.off()

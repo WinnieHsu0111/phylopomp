@@ -10,35 +10,35 @@
 runBDEI(
   time,
   t0 = 0,
-  mu = 0.128205128205128,
-  lambda_ie = 0.766666666666667,
-  psi = 0.333333333333333,
-  p = 0.505,
+  sigma = 1/7,
+  lambda = 7/9,
+  mu = 1/6,
+  chi = 1/6,
   pop = 1,
-  fe = 0,
-  fi = 1
+  E0 = 0,
+  I0 = 1
 )
 
-continueBDEI(object, time, mu = NA, lambda_ie = NA, psi = NA, p = NA)
+continueBDEI(object, time, sigma = NA, lambda = NA, mu = NA, chi = NA)
 }
 \arguments{
 \item{time}{end timepoint of simulation}
 
 \item{t0}{beginning timepoint of simulation}
 
-\item{mu}{per capita progression rate from exposed to infectious}
+\item{sigma}{per capita progression rate (exposed to infectious)}
 
-\item{lambda_ie}{per capita transmission rate from infectious to exposed}
+\item{lambda}{per capita reproduction rate}
 
-\item{psi}{per capita removal rate of infectious lineages}
+\item{mu}{per capita removal rate (of infectious lineages)}
 
-\item{p}{probability of sampling upon infectious removal}
+\item{chi}{(destructive) sampling rate}
 
-\item{pop}{reference population size for scaling initial lineage counts}
+\item{pop}{initial population size}
 
-\item{fe}{initial fraction of exposed lineages (ie/pop)}
+\item{E0}{initial fraction of exposed lineages}
 
-\item{fi}{initial fraction of infectious lineages (ii/pop)}
+\item{I0}{initial fraction of infectious lineages}
 
 \item{object}{a previously computed simulation}
 }
@@ -49,11 +49,16 @@ continueBDEI(object, time, mu = NA, lambda_ie = NA, psi = NA, p = NA)
 Two-deme linear birth-death process with exposed (incubating) and infectious lineages.
 Transmission creates exposed offspring from infectious donors; exposed lineages progress to infectious.
 Removal and Stadler sampling-on-removal apply to infectious lineages only.
-Compatible with the BDEI model of Voznica et al. (2022), https://doi.org/10.1038/s41467-022-31511-0,
-and structured linear birth-death theory (Stadler 2010, https://doi.org/10.1016/j.jtbi.2010.09.010;
-King et al. 2024, https://arxiv.org/abs/2405.17032).
-YAML rate defaults are midpoints of the PhyloDeep training priors
-(R0 in [1.1, 3.5], T_I in [1, 5], T_E/T_I in [0.2, 5], p in [0.01, 1]).
+Identical to the BDEI model of Voznica et al. (2022), though with an alternative parameterization.
+}
+\examples{
+library(phylopomp)
+
+runBDEI(time=10, pop=2, E0=0.5, I0=0.5) |>
+  plot()
+}
+\references{
+\Voznica2022
 }
 \seealso{
 More example genealogy processes:
@@ -65,7 +70,7 @@ More example genealogy processes:
 \code{\link{seir}},
 \code{\link{si2r}},
 \code{\link{siir}},
-\code{\link{simulate}()},
+\code{\link[=simulate]{simulate()}},
 \code{\link{sir}},
 \code{\link{strains}},
 \code{\link{twospecies}},
