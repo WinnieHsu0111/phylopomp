@@ -10,23 +10,24 @@
 runBDSS(
   time,
   t0 = 0,
-  la_nn = 0.1,
-  la_ns = 0.3,
-  la_sn = 0.5,
-  la_ss = 1.5,
-  mu = 0.25,
-  p = 0.3,
-  IN0 = 1,
-  IS0 = 0
+  lambda_nn = 0.875,
+  lambda_ns = 0.125,
+  lambda_sn = 5.6875,
+  lambda_ss = 0.8125,
+  mu = 1,
+  p = 0.505,
+  pop = 1,
+  fn = 1,
+  fs = 0
 )
 
 continueBDSS(
   object,
   time,
-  la_nn = NA,
-  la_ns = NA,
-  la_sn = NA,
-  la_ss = NA,
+  lambda_nn = NA,
+  lambda_ns = NA,
+  lambda_sn = NA,
+  lambda_ss = NA,
   mu = NA,
   p = NA
 )
@@ -36,21 +37,23 @@ continueBDSS(
 
 \item{t0}{beginning timepoint of simulation}
 
-\item{la_nn}{normal-to-normal transmission rate}
+\item{lambda_nn}{normal-to-normal transmission rate}
 
-\item{la_ns}{normal-to-superspreader transmission rate}
+\item{lambda_ns}{normal-to-superspreader transmission rate}
 
-\item{la_sn}{superspreader-to-normal transmission rate}
+\item{lambda_sn}{superspreader-to-normal transmission rate}
 
-\item{la_ss}{superspreader-to-superspreader transmission rate}
+\item{lambda_ss}{superspreader-to-superspreader transmission rate}
 
 \item{mu}{per capita removal rate}
 
 \item{p}{probability of sampling upon removal}
 
-\item{IN0}{initial number of normal spreaders}
+\item{pop}{reference population size for scaling initial lineage counts}
 
-\item{IS0}{initial number of superspreaders}
+\item{fn}{initial fraction of normal spreaders (ino/pop)}
+
+\item{fs}{initial fraction of superspreaders (iso/pop)}
 
 \item{object}{a previously computed simulation}
 }
@@ -59,10 +62,15 @@ continueBDSS(
 }
 \description{
 Two-deme linear birth-death process with heterogeneous per-lineage transmission rates.
-Compatible with the BDSS model of Voznica et al. and structured birth-death models of Stadler.
+Compatible with the BDSS model of Voznica et al. (2022), https://doi.org/10.1038/s41467-022-31511-0,
+and structured linear birth-death theory (Stadler 2010, https://doi.org/10.1016/j.jtbi.2010.09.010;
+King et al. 2024, https://arxiv.org/abs/2405.17032).
+YAML rate defaults are midpoints of the PhyloDeep training priors
+(f in [0.05, 0.20], X in [3, 10], lambda_n in [0.5, 1.5], mu in [0.5, 1.5], p in [0.01, 1]).
 }
 \seealso{
 More example genealogy processes:
+\code{\link{bdei}},
 \code{\link{lbdp}},
 \code{\link{mers}},
 \code{\link{moran}},

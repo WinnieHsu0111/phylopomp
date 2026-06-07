@@ -122,6 +122,8 @@ The population is structured by infection progression and host species.
 }
 \seealso{
 More example genealogy processes:
+\code{\link{bdei}},
+\code{\link{bdss}},
 \code{\link{lbdp}},
 \code{\link{mers}},
 \code{\link{moran}},
@@ -129,7 +131,7 @@ More example genealogy processes:
 \code{\link{seir}},
 \code{\link{si2r}},
 \code{\link{siir}},
-\code{\link[=simulate]{simulate()}},
+\code{\link{simulate}()},
 \code{\link{sir}},
 \code{\link{strains}},
 \code{\link{twospecies}}

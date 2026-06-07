@@ -79,13 +79,15 @@ Two distinct pathogen strains compete for susceptibles.
 }
 \seealso{
 More example genealogy processes:
+\code{\link{bdei}},
+\code{\link{bdss}},
 \code{\link{lbdp}},
 \code{\link{mers}},
 \code{\link{moran}},
 \code{\link{s2i2r2}},
 \code{\link{seir}},
 \code{\link{si2r}},
-\code{\link[=simulate]{simulate()}},
+\code{\link{simulate}()},
 \code{\link{sir}},
 \code{\link{strains}},
 \code{\link{twospecies}},

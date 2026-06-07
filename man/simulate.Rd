@@ -41,6 +41,8 @@ Note that, one cannot change initial conditions or \code{t0} when continuing a s
 }
 \seealso{
 More example genealogy processes:
+\code{\link{bdei}},
+\code{\link{bdss}},
 \code{\link{lbdp}},
 \code{\link{mers}},
 \code{\link{moran}},

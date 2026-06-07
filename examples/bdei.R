@@ -1,6 +1,5 @@
-simulate("BDEI", time=5) |>
-  plot(prune=FALSE, obscure=FALSE)
+library(phylopomp)
+set.seed(101)
 
-runBDEI(time=2, mu=1, la=0.5, psi=0.25, p=0.5, II0=2) |>
-  simulate(time=5) |>
-  plot(points=TRUE)
+runBDEI(time=2, pop=2, fe=0, fi=1) |>
+  plot()

@@ -157,6 +157,8 @@ Note that, for the moment, \code{twospecies_pomp} assumes that there is no impor
 }
 \seealso{
 More example genealogy processes:
+\code{\link{bdei}},
+\code{\link{bdss}},
 \code{\link{lbdp}},
 \code{\link{mers}},
 \code{\link{moran}},
@@ -164,7 +166,7 @@ More example genealogy processes:
 \code{\link{seir}},
 \code{\link{si2r}},
 \code{\link{siir}},
-\code{\link[=simulate]{simulate()}},
+\code{\link{simulate}()},
 \code{\link{sir}},
 \code{\link{strains}},
 \code{\link{twoundead}}

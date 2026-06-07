@@ -1,6 +1,5 @@
-simulate("BDSS", time=5) |>
-  plot(prune=FALSE, obscure=FALSE)
+library(phylopomp)
+set.seed(101)
 
-runBDSS(time=2, la_nn=0.2, la_ss=2, p=0.5, IN0=2) |>
-  simulate(time=5) |>
-  plot(points=TRUE)
+runBDSS(time=2, pop=2, fn=1, fs=0) |>
+  plot()
