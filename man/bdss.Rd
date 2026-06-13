@@ -12,13 +12,13 @@ runBDSS(
   t0 = 0,
   lambda_nn = 0.875,
   lambda_ns = 0.125,
-  lambda_sn = 5.6875,
-  lambda_ss = 0.8125,
-  mu = 1,
-  p = 0.505,
+  lambda_sn = 5.5,
+  lambda_ss = 0.75,
+  mu = 0.5,
+  chi = 0.5,
   pop = 1,
-  fn = 1,
-  fs = 0
+  N0 = 1,
+  S0 = 0
 )
 
 continueBDSS(
@@ -29,7 +29,7 @@ continueBDSS(
   lambda_sn = NA,
   lambda_ss = NA,
   mu = NA,
-  p = NA
+  chi = NA
 )
 }
 \arguments{
@@ -45,15 +45,15 @@ continueBDSS(
 
 \item{lambda_ss}{superspreader-to-superspreader transmission rate}
 
-\item{mu}{per capita removal rate}
+\item{mu}{per capita removal (death or recovery) rate}
 
-\item{p}{probability of sampling upon removal}
+\item{chi}{per capita destructive sampling rate}
 
-\item{pop}{reference population size for scaling initial lineage counts}
+\item{pop}{initial population size}
 
-\item{fn}{initial fraction of normal spreaders (ino/pop)}
+\item{N0}{initial fraction of normal spreaders}
 
-\item{fs}{initial fraction of superspreaders (iso/pop)}
+\item{S0}{initial fraction of superspreaders}
 
 \item{object}{a previously computed simulation}
 }
@@ -62,11 +62,7 @@ continueBDSS(
 }
 \description{
 Two-deme linear birth-death process with heterogeneous per-lineage transmission rates.
-Compatible with the BDSS model of Voznica et al. (2022), https://doi.org/10.1038/s41467-022-31511-0,
-and structured linear birth-death theory (Stadler 2010, https://doi.org/10.1016/j.jtbi.2010.09.010;
-King et al. 2024, https://arxiv.org/abs/2405.17032).
-YAML rate defaults are midpoints of the PhyloDeep training priors
-(f in [0.05, 0.20], X in [3, 10], lambda_n in [0.5, 1.5], mu in [0.5, 1.5], p in [0.01, 1]).
+Identical to the BDSS model of Voznica et al. (2022, https://doi.org/10.1038/s41467-022-31511-0), though the parameterization differs.
 }
 \seealso{
 More example genealogy processes:

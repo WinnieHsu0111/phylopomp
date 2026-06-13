@@ -3,7 +3,7 @@
 ##' Two-deme linear birth-death process with exposed (incubating) and infectious lineages.
 ##' Transmission creates exposed offspring from infectious donors; exposed lineages progress to infectious.
 ##' Removal and Stadler sampling-on-removal apply to infectious lineages only.
-##' Identical to the BDEI model of Voznica et al. (2022), though with an alternative parameterization.
+##' Identical to the BDEI model of Voznica et al. (2022, https://doi.org/10.1038/s41467-022-31511-0), albeit with a different parameterization.
 ##'
 ##' @name bdei
 ##' @family Genealogy processes

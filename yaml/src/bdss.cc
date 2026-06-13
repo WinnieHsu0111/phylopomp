@@ -9,8 +9,8 @@ static const int superspreader = 2;
 
 //! BDSS process state.
 typedef struct {
-  int IN;
-  int IS;
+  int N;
+  int S;
 } bdss_state_t;
 
 //! BDSS process parameters.
@@ -20,10 +20,10 @@ typedef struct {
   double lambda_sn;
   double lambda_ss;
   double mu;
-  double p;
+  double chi;
   double pop;
-  double fn;
-  double fs;
+  double N0;
+  double S0;
 } bdss_parameters_t;
 
 using bdss_proc_t = popul_proc_t<bdss_state_t,bdss_parameters_t,8>;
@@ -38,13 +38,13 @@ std::string bdss_proc_t::yaml (std::string tab) const {
     + YAML_PARAM(lambda_sn)
     + YAML_PARAM(lambda_ss)
     + YAML_PARAM(mu)
-    + YAML_PARAM(p)
+    + YAML_PARAM(chi)
     + YAML_PARAM(pop)
-    + YAML_PARAM(fn)
-    + YAML_PARAM(fs);
+    + YAML_PARAM(N0)
+    + YAML_PARAM(S0);
   std::string s = tab + "state:\n"
-    + YAML_STATE(IN)
-    + YAML_STATE(IS);
+    + YAML_STATE(N)
+    + YAML_STATE(S);
   return p+s;
 }
 
@@ -56,7 +56,7 @@ void bdss_proc_t::update_params (double *p, int n) {
   PARAM_SET(lambda_sn);
   PARAM_SET(lambda_ss);
   PARAM_SET(mu);
-  PARAM_SET(p);
+  PARAM_SET(chi);
   if (m != n) err("wrong number of parameters!");
 }
 
@@ -64,8 +64,8 @@ template<>
 void bdss_proc_t::update_IVPs (double *p, int n) {
   int m = 0;
   PARAM_SET(pop);
-  PARAM_SET(fn);
-  PARAM_SET(fs);
+  PARAM_SET(N0);
+  PARAM_SET(S0);
   if (m != n) err("wrong number of initial-value parameters!");
 }
 
@@ -73,58 +73,53 @@ template<>
 double bdss_proc_t::event_rates (double *rate, int n) const {
   int m = 0;
   double total = 0;
-  RATE_CALC(params.lambda_nn * state.IN);
-  RATE_CALC(params.lambda_ns * state.IN);
-  RATE_CALC(params.lambda_sn * state.IS);
-  RATE_CALC(params.lambda_ss * state.IS);
-  RATE_CALC(params.mu * (1 - params.p) * state.IN);
-  RATE_CALC(params.mu * (1 - params.p) * state.IS);
-  RATE_CALC(params.mu * params.p * state.IN);
-  RATE_CALC(params.mu * params.p * state.IS);
+  RATE_CALC(params.lambda_nn * state.N);
+  RATE_CALC(params.lambda_ns * state.N);
+  RATE_CALC(params.lambda_sn * state.S);
+  RATE_CALC(params.lambda_ss * state.S);
+  RATE_CALC(params.mu * state.N);
+  RATE_CALC(params.mu * state.S);
+  RATE_CALC(params.chi * state.N);
+  RATE_CALC(params.chi * state.S);
   if (m != n) err("wrong number of events!");
   return total;
 }
 
 template<>
 void bdss_genealogy_t::rinit (void) {
-  double denom = params.fn + params.fs;
-  if (denom > 0) {
-    state.IN = nearbyint((params.fn * params.pop) / denom);
-    state.IS = nearbyint((params.fs * params.pop) / denom);
-  } else {
-    state.IN = 1;
-    state.IS = 0;
-  }
-  if (state.IN > 0) graft(normal, state.IN);
-  if (state.IS > 0) graft(superspreader, state.IS);
+  double m = params.pop/(params.N0 + params.S0);
+  state.N = nearbyint(m*params.N0);
+  state.S = nearbyint(m*params.S0);
+  graft(normal, state.N);
+  graft(superspreader, state.S);
 }
 
 template<>
 void bdss_genealogy_t::jump (int event) {
   switch (event) {
   case 0:
-    state.IN += 1; birth(normal, normal);
+    state.N += 1; birth(normal, normal);
     break;
   case 1:
-    state.IS += 1; birth(normal, superspreader);
+    state.S += 1; birth(normal, superspreader);
     break;
   case 2:
-    state.IN += 1; birth(superspreader, normal);
+    state.N += 1; birth(superspreader, normal);
     break;
   case 3:
-    state.IS += 1; birth(superspreader, superspreader);
+    state.S += 1; birth(superspreader, superspreader);
     break;
   case 4:
-    state.IN -= 1; death(normal);
+    state.N -= 1; death(normal);
     break;
   case 5:
-    state.IS -= 1; death(superspreader);
+    state.S -= 1; death(superspreader);
     break;
   case 6:
-    state.IN -= 1; sample_death(normal);
+    state.N -= 1; sample_death(normal);
     break;
   case 7:
-    state.IS -= 1; sample_death(superspreader);
+    state.S -= 1; sample_death(superspreader);
     break;
   default:                      // #nocov
     assert(0);                  // #nocov

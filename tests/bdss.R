@@ -1,5 +1,8 @@
+png(filename="bdss-%02d.png",res=100)
+
 options(digits=3)
 suppressPackageStartupMessages({
+  library(ggplot2)
   library(phylopomp)
 })
 set.seed(20260604)
@@ -9,24 +12,36 @@ stopifnot(
   attr(x, "model") == "BDSS",
   inherits(x, "gpsim")
 )
-
-y <- simulate("BDSS", time=3, lambda_nn=0.2, lambda_ss=2, p=0.5, pop=2, fn=1, fs=0)
-stopifnot(
-  attr(y, "model") == "BDSS",
-  is.finite(max(getInfo(y, time=TRUE)$time))
+y <- continueBDSS(x, time=6)
+plot_grid(
+  plot(x)+expand_limits(x=6),
+  plot(y)+geom_vline(xintercept=5),
+  y |>
+    curtail(time=5) |>
+    plot()+expand_limits(x=6),
+  ncol=1
 )
 
-runBDSS(time=2, lambda_nn=0.2, lambda_ss=2, mu=0.5, p=0.2, pop=4, fn=0.25, fs=0.75) -> w
-stopifnot(
-  attr(w, "model") == "BDSS",
-  is.finite(max(getInfo(w, time=TRUE)$time))
-)
-
-z <- continueBDSS(y, time=6)
-stopifnot(attr(z, "model") == "BDSS")
+simulate(
+  "BDSS",
+  time=3,
+  lambda_nn = 2,
+  lambda_ns = 0,
+  lambda_sn = 0,
+  lambda_ss = 3,
+  mu = 0.5,
+  chi = 0.5,
+  pop = 15,
+  N0 = 10,
+  S0 = 5
+) |> freeze(445178631) |>
+  plot(prune=FALSE,obscure=FALSE)
 
 y |> yaml() -> yaml_out
 stopifnot(
   inherits(yaml_out, "gpyaml"),
-  grepl("lambda_nn", yaml_out)
+  gregexpr("lambda",yaml_out) |> regmatches(yaml_out,m=_) |> lengths()==4,
+  gregexpr("pocket",yaml_out) |> regmatches(yaml_out,m=_) |> lengths()==212
 )
+
+dev.off()

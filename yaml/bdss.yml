@@ -2,11 +2,7 @@ name: BDSS
 description: Linear birth-death with superspreading
 details: |-
   Two-deme linear birth-death process with heterogeneous per-lineage transmission rates.
-  Compatible with the BDSS model of Voznica et al. (2022), https://doi.org/10.1038/s41467-022-31511-0,
-  and structured linear birth-death theory (Stadler 2010, https://doi.org/10.1016/j.jtbi.2010.09.010;
-  King et al. 2024, https://arxiv.org/abs/2405.17032).
-  YAML rate defaults are midpoints of the PhyloDeep training priors
-  (f in [0.05, 0.20], X in [3, 10], lambda_n in [0.5, 1.5], mu in [0.5, 1.5], p in [0.01, 1]).
+  Identical to the BDSS model of Voznica et al. (2022, https://doi.org/10.1038/s41467-022-31511-0), though the parameterization differs.
 demes:
   - normal
   - superspreader
@@ -25,78 +21,73 @@ parameter:
     name: lambda_sn
     description: superspreader-to-normal transmission rate
     type: double
-    default: 5.6875
+    default: 5.5
   lambda_ss:
     name: lambda_ss
     description: superspreader-to-superspreader transmission rate
     type: double
-    default: 0.8125
+    default: 0.75
   mu:
     name: mu
-    description: per capita removal rate
+    description: per capita removal (death or recovery) rate
     type: double
-    default: 1.0
-  p:
-    name: p
-    description: probability of sampling upon removal
+    default: 0.5
+  chi:
+    name: chi
+    description: per capita destructive sampling rate
     type: double
-    default: 0.505
+    default: 0.5
 ivp:
   pop:
     name: pop
-    description: reference population size for scaling initial lineage counts
+    description: initial population size
     default: 1
     type: double
-  fn:
-    name: fn
-    description: initial fraction of normal spreaders (ino/pop)
+  IN0:
+    name: N0
+    description: initial fraction of normal spreaders
     default: 1
     type: double
-  fs:
-    name: fs
-    description: initial fraction of superspreaders (iso/pop)
+  IS0:
+    name: S0
+    description: initial fraction of superspreaders
     default: 0
     type: double
 state:
   IN:
-    name: IN
+    name: 'N'
     type: int
   IS:
-    name: IS
+    name: 'S'
     type: int
 rinit: |-
-    double denom = params.fn + params.fs;
-    if (denom > 0) {
-      state.IN = nearbyint((params.fn * params.pop) / denom);
-      state.IS = nearbyint((params.fs * params.pop) / denom);
-    } else {
-      state.IN = 1;
-      state.IS = 0;
-    }
-    if (state.IN > 0) graft(normal, state.IN);
-    if (state.IS > 0) graft(superspreader, state.IS);
+    double m = params.pop/(params.N0 + params.S0);
+    state.N = nearbyint(m*params.N0);
+    state.S = nearbyint(m*params.S0);
+    graft(normal, state.N);
+    graft(superspreader, state.S);
 events:
   birth_nn:
-    rate: params.lambda_nn * state.IN
-    jump: state.IN += 1; birth(normal, normal);
+    rate: params.lambda_nn * state.N
+    jump: state.N += 1; birth(normal, normal);
   birth_ns:
-    rate: params.lambda_ns * state.IN
-    jump: state.IS += 1; birth(normal, superspreader);
+    rate: params.lambda_ns * state.N
+    jump: state.S += 1; birth(normal, superspreader);
   birth_sn:
-    rate: params.lambda_sn * state.IS
-    jump: state.IN += 1; birth(superspreader, normal);
+    rate: params.lambda_sn * state.S
+    jump: state.N += 1; birth(superspreader, normal);
   birth_ss:
-    rate: params.lambda_ss * state.IS
-    jump: state.IS += 1; birth(superspreader, superspreader);
+    rate: params.lambda_ss * state.S
+    jump: state.S += 1; birth(superspreader, superspreader);
   death_n:
-    rate: params.mu * (1 - params.p) * state.IN
-    jump: state.IN -= 1; death(normal);
+    rate: params.mu * state.N
+    jump: state.N -= 1; death(normal);
   death_s:
-    rate: params.mu * (1 - params.p) * state.IS
-    jump: state.IS -= 1; death(superspreader);
+    rate: params.mu * state.S
+    jump: state.S -= 1; death(superspreader);
   sample_death_n:
-    rate: params.mu * params.p * state.IN
-    jump: state.IN -= 1; sample_death(normal);
+    rate: params.chi * state.N
+    jump: state.N -= 1; sample_death(normal);
   sample_death_s:
-    rate: params.mu * params.p * state.IS
-    jump: state.IS -= 1; sample_death(superspreader);
+    rate: params.chi * state.S
+    jump: state.S -= 1; sample_death(superspreader);

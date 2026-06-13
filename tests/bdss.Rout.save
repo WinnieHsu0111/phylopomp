@@ -1,0 +1,69 @@
+
+R version 4.5.3 (2026-03-11) -- "Reassured Reassurer"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> png(filename="bdss-%02d.png",res=100)
+> 
+> options(digits=3)
+> suppressPackageStartupMessages({
++   library(ggplot2)
++   library(phylopomp)
++ })
+> set.seed(20260604)
+> 
+> x <- runBDSS(time=5)
+> stopifnot(
++   attr(x, "model") == "BDSS",
++   inherits(x, "gpsim")
++ )
+> y <- continueBDSS(x, time=6)
+> plot_grid(
++   plot(x)+expand_limits(x=6),
++   plot(y)+geom_vline(xintercept=5),
++   y |>
++     curtail(time=5) |>
++     plot()+expand_limits(x=6),
++   ncol=1
++ )
+> 
+> simulate(
++   "BDSS",
++   time=3,
++   lambda_nn = 2,
++   lambda_ns = 0,
++   lambda_sn = 0,
++   lambda_ss = 3,
++   mu = 0.5,
++   chi = 0.5,
++   pop = 15,
++   N0 = 10,
++   S0 = 5
++ ) |> freeze(445178631) |>
++   plot(prune=FALSE,obscure=FALSE)
+> 
+> y |> yaml() -> yaml_out
+> stopifnot(
++   inherits(yaml_out, "gpyaml"),
++   gregexpr("lambda",yaml_out) |> regmatches(yaml_out,m=_) |> lengths()==4,
++   gregexpr("pocket",yaml_out) |> regmatches(yaml_out,m=_) |> lengths()==212
++ )
+> 
+> dev.off()
+null device 
+          1 
+> 

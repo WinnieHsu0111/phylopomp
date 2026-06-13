@@ -1,5 +1,10 @@
 \name{NEWS}
 \title{News for package `phylopomp'}
+\section{Changes in \pkg{phylopomp} version 0.19.2}{
+  \itemize{
+    \item There are new BDEI and BDSS models.
+  }
+}
 \section{Changes in \pkg{phylopomp} version 0.19.1}{
   \itemize{
     \item Fixed bug in \code{seirs_pomp}.

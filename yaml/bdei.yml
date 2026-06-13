@@ -4,9 +4,7 @@ details: |-
   Two-deme linear birth-death process with exposed (incubating) and infectious lineages.
   Transmission creates exposed offspring from infectious donors; exposed lineages progress to infectious.
   Removal and Stadler sampling-on-removal apply to infectious lineages only.
-  Compatible with the BDEI model of Voznica et al. (2022, https://doi.org/10.1038/s41467-022-31511-0),
-  and structured linear birth-death theory (Stadler 2010, https://doi.org/10.1016/j.jtbi.2010.09.010;
-  King et al. 2024, https://arxiv.org/abs/2405.17032).
+  Identical to the BDEI model of Voznica et al. (2022, https://doi.org/10.1038/s41467-022-31511-0), albeit with a different parameterization.
 demes:
   - exposed
   - infectious
