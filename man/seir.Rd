@@ -17,6 +17,7 @@ runSEIR(
   sigma = 1,
   gamma = 1,
   psi = 1,
+  chi = 0,
   omega = 0,
   pop = 100,
   S0 = 0.9,
@@ -32,6 +33,7 @@ runSEIRS(
   sigma = 1,
   gamma = 1,
   psi = 1,
+  chi = 0,
   omega = 0,
   pop = 100,
   S0 = 0.9,
@@ -47,6 +49,7 @@ continueSEIR(
   sigma = NA,
   gamma = NA,
   psi = NA,
+  chi = NA,
   omega = NA
 )
 
@@ -57,6 +60,7 @@ continueSEIRS(
   sigma = NA,
   gamma = NA,
   psi = NA,
+  chi = NA,
   omega = NA
 )
 
@@ -73,7 +77,9 @@ seirs_pomp(x, Beta, sigma, gamma, psi, omega = 0, S0, E0, I0, R0, pop)
 
 \item{gamma}{recovery rate}
 
-\item{psi}{per capita sampling rate}
+\item{psi}{per capita non-destructive sampling rate}
+
+\item{chi}{per capita destructive sampling rate}
 
 \item{omega}{rate of waning of immunity}
 

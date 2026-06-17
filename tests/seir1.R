@@ -52,4 +52,10 @@ simulate(
   pfilter(Np=10) |>
   logLik()
 
+simulate("SEIR",time=3,
+  Beta=4,sigma=1,gamma=1,chi=1,omega=1,
+  S0=1,I0=0.1,E0=0.1,R0=0,pop=100
+) |>
+  plot(obscure=FALSE)
+
 dev.off()

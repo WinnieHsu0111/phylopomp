@@ -12,7 +12,8 @@
 ##' @param Beta transmission rate
 ##' @param sigma progression rate
 ##' @param gamma recovery rate
-##' @param psi per capita sampling rate
+##' @param psi per capita non-destructive sampling rate
+##' @param chi per capita destructive sampling rate
 ##' @param omega rate of waning of immunity
 ##' @param pop host population size
 ##' @param S0 initial fraction of population susceptible to infection
@@ -30,9 +31,9 @@ NULL
 ##' @export
 runSEIR <- function (
   time, t0 = 0,
-  Beta = 4, sigma = 1, gamma = 1, psi = 1, omega = 0, pop = 100, S0 = 0.9, E0 = 0.05, I0 = 0.05, R0 = 0
+  Beta = 4, sigma = 1, gamma = 1, psi = 1, chi = 0, omega = 0, pop = 100, S0 = 0.9, E0 = 0.05, I0 = 0.05, R0 = 0
 ) {
-  params <- c(Beta=Beta,sigma=sigma,gamma=gamma,psi=psi,omega=omega)
+  params <- c(Beta=Beta,sigma=sigma,gamma=gamma,psi=psi,chi=chi,omega=omega)
   ivps <- c(pop=pop,S0=S0,E0=E0,I0=I0,R0=R0)
   x <- .Call(P_makeSEIR,params,ivps,t0)
   .Call(P_runSEIR,x,time) |>
@@ -43,10 +44,10 @@ runSEIR <- function (
 ##' @export
 continueSEIR <- function (
   object, time,
-  Beta = NA, sigma = NA, gamma = NA, psi = NA, omega = NA
+  Beta = NA, sigma = NA, gamma = NA, psi = NA, chi = NA, omega = NA
 ) {
   params <- c(
-    Beta=Beta,sigma=sigma,gamma=gamma,psi=psi,omega=omega
+    Beta=Beta,sigma=sigma,gamma=gamma,psi=psi,chi=chi,omega=omega
   )
   x <- .Call(P_reviveSEIR,object,params)
   .Call(P_runSEIR,x,time) |>

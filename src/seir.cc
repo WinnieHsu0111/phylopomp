@@ -21,6 +21,7 @@ typedef struct {
   double sigma;
   double gamma;
   double psi;
+  double chi;
   double omega;
   double pop;
   double S0;
@@ -29,7 +30,7 @@ typedef struct {
   double R0;
 } seir_parameters_t;
 
-using seir_proc_t = popul_proc_t<seir_state_t,seir_parameters_t,5>;
+using seir_proc_t = popul_proc_t<seir_state_t,seir_parameters_t,6>;
 using seir_genealogy_t = master_t<seir_proc_t,2>;
 
 template<>
@@ -40,6 +41,7 @@ std::string seir_proc_t::yaml (std::string tab) const {
     + YAML_PARAM(sigma)
     + YAML_PARAM(gamma)
     + YAML_PARAM(psi)
+    + YAML_PARAM(chi)
     + YAML_PARAM(omega)
     + YAML_PARAM(pop)
     + YAML_PARAM(S0)
@@ -61,6 +63,7 @@ void seir_proc_t::update_params (double *p, int n) {
   PARAM_SET(sigma);
   PARAM_SET(gamma);
   PARAM_SET(psi);
+  PARAM_SET(chi);
   PARAM_SET(omega);
   if (m != n) err("wrong number of parameters!");
 }
@@ -83,6 +86,7 @@ double seir_proc_t::event_rates (double *rate, int n) const {
   RATE_CALC(params.Beta * state.S * state.I / params.pop);
   RATE_CALC(params.sigma * state.E);
   RATE_CALC(params.gamma * state.I);
+  RATE_CALC(params.chi * state.I);
   RATE_CALC(params.psi * state.I);
   RATE_CALC(params.omega * state.R);
   if (m != n) err("wrong number of events!");
@@ -113,9 +117,12 @@ void seir_genealogy_t::jump (int event) {
     state.I -= 1; state.R += 1; death(Infectious);
     break;
   case 3:
-    sample(Infectious);
+    state.I -= 1; sample_death(Infectious);
     break;
   case 4:
+    sample(Infectious);
+    break;
+  case 5:
     state.R -= 1; state.S += 1;
     break;
   default:                      // #nocov

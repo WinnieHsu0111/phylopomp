@@ -15,7 +15,8 @@ runStrains(
 )
 
 try(
-  runStrains(
+  simulate(
+    "Strains",
     time=10,chi1=1,chi2=1,
     S_0=100,I1_0=-10,I2_0=10,I3_0=10,pop=130
   )
