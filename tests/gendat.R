@@ -81,7 +81,7 @@ g |>
   count(deme)
 
 runStrains(
-  time=2,chi1=2,chi2=2,chi3=3,
+  time=2,chi=2,
   S_0=10000,I1_0=10,I2_0=10,I3_0=10,pop=10030
 ) |>
   freeze(seed=540737457) -> x

@@ -11,15 +11,13 @@ static const int nrate = 6;
 #define Beta2     (__p[__parindex[1]])
 #define Beta3     (__p[__parindex[2]])
 #define gamma     (__p[__parindex[3]])
-#define chi1      (__p[__parindex[4]])
-#define chi2      (__p[__parindex[5]])
-#define chi3      (__p[__parindex[6]])
-#define S_0       (__p[__parindex[7]])
-#define I1_0      (__p[__parindex[8]])
-#define I2_0      (__p[__parindex[9]])
-#define I3_0      (__p[__parindex[10]])
-#define R_0       (__p[__parindex[11]])
-#define POP       (__p[__parindex[12]])
+#define chi       (__p[__parindex[4]])
+#define S_0       (__p[__parindex[5]])
+#define I1_0      (__p[__parindex[6]])
+#define I2_0      (__p[__parindex[7]])
+#define I3_0      (__p[__parindex[8]])
+#define R_0       (__p[__parindex[9]])
+#define POP       (__p[__parindex[10]])
 #define S         (__x[__stateindex[0]])
 #define I1        (__x[__stateindex[1]])
 #define I2        (__x[__stateindex[2]])
@@ -72,7 +70,7 @@ static double event_rates
     *penalty += alpha;
   }
   // strain 1 sampling
-  alpha = chi1*I1;
+  alpha = chi*I1;
   *penalty += alpha;
   // 2: strain-2 transmission with saturation 0 or 1
   alpha = Beta2*S*I2/POP;
@@ -88,7 +86,7 @@ static double event_rates
     *penalty += alpha;
   }
   // strain 2 sampling
-  alpha = chi2*I2;
+  alpha = chi*I2;
   *penalty += alpha;
   // 4: strain-3 transmission with saturation 0 or 1
   alpha = Beta3*S*I3/POP;
@@ -104,7 +102,7 @@ static double event_rates
     *penalty += alpha;
   }
   // strain 3 sampling
-  alpha = chi3*I3;
+  alpha = chi*I3;
   *penalty += alpha;
   assert(R_FINITE(event_rate));
   return event_rate;
@@ -191,19 +189,19 @@ void strains_gill
     case STRAIN1:
       assert(I1 >= ellI1);
       assert(ellI1 >= 0);
-      ll += log(chi1*I1);
+      ll += log(chi*I1);
       ellI1 -= 1; I1 -= 1;
       break;
     case STRAIN2:
       assert(I2 >= ellI2);
       assert(ellI2 >= 0);
-      ll += log(chi2*I2);
+      ll += log(chi*I2);
       ellI2 -= 1; I2 -= 1;
       break;
     case STRAIN3:
       assert(I3 >= ellI3);
       assert(ellI3 >= 0);
-      ll += log(chi3*I3);
+      ll += log(chi*I3);
       ellI3 -= 1; I3 -= 1;
       break;
     default:                    // #nocov

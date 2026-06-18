@@ -13,74 +13,64 @@ parameter:
     name: Beta1
     description: transmission rate for strain 1
     type: double
-    default: 5
+    default: 5/7
   Beta2:
     name: Beta2
     description: transmission rate for strain 2
     type: double
-    default: 5
+    default: 5/7
   Beta3:
     name: Beta3
     description: transmission rate for strain 3
     type: double
-    default: 5
+    default: 5/7
   gamma:
     name: gamma
     description: recovery rate
     type: double
-    default: 1
-  chi1:
-    name: chi1
-    description: (destructive) sampling rate for strain 1
-    default: 1
-    type: double
-  chi2:
-    name: chi2
-    description: (destructive) sampling rate for strain 2
-    default: 0
-    type: double
-  chi3:
-    name: chi3
-    description: (destructive) sampling rate for strain 3
-    default: 0
+    default: 1/7
+  chi:
+    name: chi
+    description: (destructive) sampling rate
+    default: 0.002
     type: double
 ivp:
   pop:
     name: pop
     description: population size
     type: double
-    default: 1e5
+    default: 1e6
   S_0:
     name: S_0
     description: initial susceptible fraction
-    default: 0.8
+    default: 0.9
     type: double
   I1_0:
     name: I1_0
     description: |-
       initial fraction of population
       infected by strain 1
-    default: 0.01
+    default: 0.003
     type: double
   I2_0:
     name: I2_0
     description: |-
       initial fraction of population
       infected by strain 2
-    default: 0.01
+    default: 0.003
     type: double
   I3_0:
     name: I3_0
     description: |-
       initial fraction of population
       infected by strain 2
-    default: 0.01
+    default: 0.003
     type: double
   R_0:
     name: R_0
     description: |-
       initial fraction of population immune
-    default: 0.2
+    default: 0.1
     type: double
 state:
   S:
@@ -128,11 +118,11 @@ events:
     jump: state.I3 -= 1; state.R += 1; death(strain3);
     rate: params.gamma * state.I3
   sample1:
-    rate: params.chi1 * state.I1
+    rate: params.chi * state.I1
     jump: state.I1 -= 1; state.R += 1; sample_death(strain1);
   sample2:
-    rate: params.chi2 * state.I2
+    rate: params.chi * state.I2
     jump: state.I2 -= 1; state.R += 1; sample_death(strain2);
   sample3:
-    rate: params.chi3 * state.I3
+    rate: params.chi * state.I3
     jump: state.I3 -= 1; state.R += 1; sample_death(strain3);

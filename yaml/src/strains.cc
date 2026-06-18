@@ -23,9 +23,7 @@ typedef struct {
   double Beta2;
   double Beta3;
   double gamma;
-  double chi1;
-  double chi2;
-  double chi3;
+  double chi;
   double pop;
   double S_0;
   double I1_0;
@@ -45,9 +43,7 @@ std::string strains_proc_t::yaml (std::string tab) const {
     + YAML_PARAM(Beta2)
     + YAML_PARAM(Beta3)
     + YAML_PARAM(gamma)
-    + YAML_PARAM(chi1)
-    + YAML_PARAM(chi2)
-    + YAML_PARAM(chi3)
+    + YAML_PARAM(chi)
     + YAML_PARAM(pop)
     + YAML_PARAM(S_0)
     + YAML_PARAM(I1_0)
@@ -70,9 +66,7 @@ void strains_proc_t::update_params (double *p, int n) {
   PARAM_SET(Beta2);
   PARAM_SET(Beta3);
   PARAM_SET(gamma);
-  PARAM_SET(chi1);
-  PARAM_SET(chi2);
-  PARAM_SET(chi3);
+  PARAM_SET(chi);
   if (m != n) err("wrong number of parameters!");
 }
 
@@ -98,9 +92,9 @@ double strains_proc_t::event_rates (double *rate, int n) const {
   RATE_CALC(params.gamma * state.I1);
   RATE_CALC(params.gamma * state.I2);
   RATE_CALC(params.gamma * state.I3);
-  RATE_CALC(params.chi1 * state.I1);
-  RATE_CALC(params.chi2 * state.I2);
-  RATE_CALC(params.chi3 * state.I3);
+  RATE_CALC(params.chi * state.I1);
+  RATE_CALC(params.chi * state.I2);
+  RATE_CALC(params.chi * state.I3);
   if (m != n) err("wrong number of events!");
   return total;
 }

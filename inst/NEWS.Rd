@@ -1,5 +1,11 @@
 \name{NEWS}
 \title{News for package `phylopomp'}
+\section{Changes in \pkg{phylopomp} version 0.19.3}{
+  \itemize{
+    \item The parameterization of the Strains model has changed.
+    \item The SEIR model now supports destructive sampling as well as non-destructive sampling.
+  }
+}
 \section{Changes in \pkg{phylopomp} version 0.19.2}{
   \itemize{
     \item There are new BDEI and BDSS models.

@@ -29,7 +29,7 @@ Type 'q()' to quit R.
 > set.seed(481604604)
 > 
 > runStrains(
-+   time=10,chi1=1,chi2=1,
++   time=10,chi=1,
 +   S_0=100,I1_0=10,I2_0=10,I3_0=10,pop=130
 + )
 <gpsim for Strains model>
@@ -37,17 +37,17 @@ Type 'q()' to quit R.
 > try(
 +   simulate(
 +     "Strains",
-+     time=10,chi1=1,chi2=1,
++     time=10,chi=1,
 +     S_0=100,I1_0=-10,I2_0=10,I3_0=10,pop=130
 +   )
 + )
-Error : in 'update_clocks': negative rate[0]=-54.4615
+Error : in 'update_clocks': negative rate[0]=-7.78022
 > 
 > runStrains(
 +   S_0=100,I1_0=10,I2_0=10,I3_0=10,pop=130,
 +   Beta1=10,Beta2=8,Beta3=5,
 +   gamma=1,
-+   chi1=2,chi2=2,chi3=0.5,
++   chi=2,
 +   time=2
 + ) |>
 +   plot(points=TRUE,obscure=FALSE)
@@ -55,7 +55,7 @@ Error : in 'update_clocks': negative rate[0]=-54.4615
 > runStrains(
 +   S_0=200,I1_0=10,I2_0=10,I3_0=10,pop=230,
 +   Beta1=10,Beta2=8,Beta3=5,
-+   gamma=1,chi1=2,chi2=2,chi3=0.5,
++   gamma=1,chi=2,
 +   time=1
 + ) |>
 +   simulate(time=5) -> x
@@ -77,7 +77,7 @@ Error : in 'update_clocks': negative rate[0]=-54.4615
 > x |>
 +   strains_pomp(
 +     Beta1=10,Beta2=8,Beta3=5,
-+     gamma=1,chi1=2,chi2=2,chi3=0.5,
++     gamma=1,chi=2,
 +     S_0=200,I1_0=-10,I2_0=10,I3_0=10,R_0=0,
 +     pop=200
 +   ) |>
@@ -87,7 +87,7 @@ Error : in 'strains_pomp': 'S_0','I1_0','I2_0','I3_0','R_0' must be nonnegative.
 > x |>
 +   strains_pomp(
 +     Beta1=10,Beta2=8,Beta3=5,
-+     gamma=1,chi1=2,chi2=2,chi3=0.5,
++     gamma=1,chi=2,
 +     S_0=200,I1_0=10,I2_0=10,I3_0=10,R_0=0,
 +     pop=230
 +   ) |>
@@ -99,8 +99,8 @@ Error : in 'strains_pomp': 'S_0','I1_0','I2_0','I3_0','R_0' must be nonnegative.
 > pf |>
 +   logLik() |>
 +   logmeanexp(se=TRUE,ess=TRUE)
-    est      se     ess 
-110.573   0.644   2.378 
+   est     se    ess 
+127.05   0.21   4.29 
 > 
 > dev.off()
 null device 

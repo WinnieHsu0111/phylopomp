@@ -164,7 +164,7 @@ $nnode
 2     2    14
 > 
 > runStrains(
-+   time=2,chi1=2,chi2=2,chi3=3,
++   time=2,chi=2,
 +   S_0=10000,I1_0=10,I2_0=10,I3_0=10,pop=10030
 + ) |>
 +   freeze(seed=540737457) -> x
@@ -186,9 +186,9 @@ pruning since 'gendat=TRUE'
 # A tibble: 3 × 2
    deme     n
   <int> <int>
-1     1   337
-2     2   665
-3     3    91
+1     1    15
+2     2    12
+3     3    11
 > 
 > dev.off()
 null device 

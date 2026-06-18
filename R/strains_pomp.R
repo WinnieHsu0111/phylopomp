@@ -11,7 +11,7 @@
 strains_pomp <- function (
   x,
   Beta1, Beta2, Beta3, gamma,
-  chi1, chi2, chi3, pop,
+  chi, pop,
   S_0, I1_0, I2_0, I3_0, R_0
 ) {
   x |> gendat(obscure=FALSE) -> gi
@@ -28,8 +28,7 @@ strains_pomp <- function (
     times=gi$nodetime[-1L],
     params=c(
       Beta1=Beta1,Beta2=Beta2,Beta3=Beta3,
-      gamma=gamma,
-      chi1=chi1,chi2=chi2,chi3=chi3,
+      gamma=gamma,chi=chi,
       ivps,pop=pop
     ),
     userdata=gi,
@@ -37,10 +36,7 @@ strains_pomp <- function (
     rprocess=onestep("strains_gill"),
     dmeasure="strains_dmeas",
     partrans=parameter_trans(
-      log=c(
-        "Beta1","Beta2","Beta3","gamma",
-        "chi1","chi2","chi3"
-      ),
+      log=c("Beta1","Beta2","Beta3","gamma","chi"),
       barycentric=c(names(ivps))
     ),
     statenames=c(
@@ -48,8 +44,7 @@ strains_pomp <- function (
       "ll","ell1","ell2","ell3","node"
     ),
     paramnames=c(
-      "Beta1","Beta2","Beta3","gamma",
-      "chi1","chi2","chi3",
+      "Beta1","Beta2","Beta3","gamma","chi",
       names(ivps),"pop"
     ),
     PACKAGE="phylopomp"

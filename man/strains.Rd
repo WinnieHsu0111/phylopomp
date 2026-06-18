@@ -11,19 +11,17 @@
 runStrains(
   time,
   t0 = 0,
-  Beta1 = 5,
-  Beta2 = 5,
-  Beta3 = 5,
-  gamma = 1,
-  chi1 = 1,
-  chi2 = 0,
-  chi3 = 0,
-  pop = 1e+05,
-  S_0 = 0.8,
-  I1_0 = 0.01,
-  I2_0 = 0.01,
-  I3_0 = 0.01,
-  R_0 = 0.2
+  Beta1 = 5/7,
+  Beta2 = 5/7,
+  Beta3 = 5/7,
+  gamma = 1/7,
+  chi = 0.002,
+  pop = 1e+06,
+  S_0 = 0.9,
+  I1_0 = 0.003,
+  I2_0 = 0.003,
+  I3_0 = 0.003,
+  R_0 = 0.1
 )
 
 continueStrains(
@@ -33,9 +31,7 @@ continueStrains(
   Beta2 = NA,
   Beta3 = NA,
   gamma = NA,
-  chi1 = NA,
-  chi2 = NA,
-  chi3 = NA
+  chi = NA
 )
 
 strains_pomp(
@@ -44,9 +40,7 @@ strains_pomp(
   Beta2,
   Beta3,
   gamma,
-  chi1,
-  chi2,
-  chi3,
+  chi,
   pop,
   S_0,
   I1_0,
@@ -68,11 +62,7 @@ strains_pomp(
 
 \item{gamma}{recovery rate}
 
-\item{chi1}{(destructive) sampling rate for strain 1}
-
-\item{chi2}{(destructive) sampling rate for strain 2}
-
-\item{chi3}{(destructive) sampling rate for strain 3}
+\item{chi}{(destructive) sampling rate}
 
 \item{pop}{population size}
 
