@@ -28,3 +28,4 @@ tmp
 covr.html
 covr.rds
 .DS_Store
+tests/*.Rout

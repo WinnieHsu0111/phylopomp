@@ -222,14 +222,28 @@ void seirs_gill
       ll += log(psi);
     } else if (sat[parent] == 0) { // s=(0,0)
       ellI -= 1;
-      // terminal sample node: non-destructive (S) and destructive (D)
-      // channels share this node shape and cannot be told apart from the
-      // genealogy, so the marginal boost sums the two single-state terms
-      // (qmd eq-sing-term + eq-sing-term-destr):
-      //   psi*(I-ellI)  [S, x'=x,     binom (1,0)=(I-ellI)/I, alpha_S=psi*I]
-      // + chi*(I+1)     [D, x'=x+e_I, binom (0,0)=1,          alpha_D=chi*(I+1)]
-      // At chi=0 this reduces to the old non-destructive value psi*(I-ellI).
-      ll += log(psi*(I-ellI) + chi*(I+1));
+      // Terminal sample node.  Two channels produce this node shape and the
+      // genealogy cannot tell them apart (qmd eq-sing-term + eq-sing-term-destr):
+      //   S (non-destructive): x'=x,     boost psi*(I-ellI)
+      //   D (destructive):     x'=x+e_I, boost chi*(I+1), host removed (I-=1)
+      // The marginal weight is the sum of the two channel rates:
+      double wS = psi*(I-ellI);   // S channel: host stays in I
+      double wD = chi*(I+1);      // D channel: host was in I just before event
+      ll += log(wS + wD);
+      // Pick which channel this terminal actually was, with probability
+      // proportional to its rate, and update the latent state accordingly.
+      // The destructive channel removes the sampled host from I.
+      // At chi=0, wD=0 so the S branch is always taken and I is unchanged,
+      // exactly reproducing the old non-destructive likelihood; as chi->0
+      // the probability of the D branch is O(chi), so the filter is
+      // continuous in chi.
+      // Always draw one uniform (independent of chi) so the RNG stream stays
+      // aligned across chi values; at chi=0, wD=0 makes the threshold 0 so
+      // the host is never removed and the result is identical to chi=0.
+      double pD = (wS + wD > 0) ? wD/(wS + wD) : 0;
+      if (unif_rand() < pD) {
+        I -= 1;                   // destructive: remove sampled host from I
+      }
     } else {
       assert(0);                // #nocov
       ll += R_NegInf;           // #nocov
