@@ -28,12 +28,13 @@ static void change_color (double *color, int nsample,
 #define sigma     (__p[__parindex[1]])
 #define gamma     (__p[__parindex[2]])
 #define psi       (__p[__parindex[3]])
-#define omega     (__p[__parindex[4]])
-#define S0        (__p[__parindex[5]])
-#define E0        (__p[__parindex[6]])
-#define I0        (__p[__parindex[7]])
-#define R0        (__p[__parindex[8]])
-#define POP       (__p[__parindex[9]])
+#define chi       (__p[__parindex[4]])
+#define omega     (__p[__parindex[5]])
+#define S0        (__p[__parindex[6]])
+#define E0        (__p[__parindex[7]])
+#define I0        (__p[__parindex[8]])
+#define R0        (__p[__parindex[9]])
+#define POP       (__p[__parindex[10]])
 #define S         (__x[__stateindex[0]])
 #define E         (__x[__stateindex[1]])
 #define I         (__x[__stateindex[2]])
@@ -101,8 +102,8 @@ static double event_rates
   // 5: waning
   event_rate += (*rate = omega*R); rate++;
   *logpi = 0; logpi++;
-  // sampling (Q = 0)
-  *penalty += psi*I;
+  // sampling (Q = 0): non-destructive (psi) + destructive (chi)
+  *penalty += psi*I + chi*I;
   assert(R_FINITE(event_rate));
   return event_rate;
 }
@@ -221,7 +222,14 @@ void seirs_gill
       ll += log(psi);
     } else if (sat[parent] == 0) { // s=(0,0)
       ellI -= 1;
-      ll += log(psi*(I-ellI));
+      // terminal sample node: non-destructive (S) and destructive (D)
+      // channels share this node shape and cannot be told apart from the
+      // genealogy, so the marginal boost sums the two single-state terms
+      // (qmd eq-sing-term + eq-sing-term-destr):
+      //   psi*(I-ellI)  [S, x'=x,     binom (1,0)=(I-ellI)/I, alpha_S=psi*I]
+      // + chi*(I+1)     [D, x'=x+e_I, binom (0,0)=1,          alpha_D=chi*(I+1)]
+      // At chi=0 this reduces to the old non-destructive value psi*(I-ellI).
+      ll += log(psi*(I-ellI) + chi*(I+1));
     } else {
       assert(0);                // #nocov
       ll += R_NegInf;           // #nocov

@@ -10,7 +10,7 @@
 ##' @export
 seirs_pomp <- function (
   x,
-  Beta, sigma, gamma, psi, omega = 0,
+  Beta, sigma, gamma, psi, chi = 0, omega = 0,
   S0, E0, I0, R0, pop
 )
 {
@@ -24,7 +24,7 @@ seirs_pomp <- function (
     t0=gi$nodetime[1L],
     times=gi$nodetime[-1L],
     params=c(
-      Beta=Beta,sigma=sigma,gamma=gamma,psi=psi,omega=omega,
+      Beta=Beta,sigma=sigma,gamma=gamma,psi=psi,chi=chi,omega=omega,
       ivps,pop=pop
     ),
     userdata=gi,
@@ -37,7 +37,7 @@ seirs_pomp <- function (
       "node","ellE","ellI","color"
     ),
     paramnames=c(
-      "Beta","sigma","gamma","psi","omega",
+      "Beta","sigma","gamma","psi","chi","omega",
       "S0","E0","I0","R0","pop"
     ),
     PACKAGE="phylopomp"
