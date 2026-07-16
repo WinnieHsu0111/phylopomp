@@ -22,8 +22,13 @@ Collate:
     'geneal.R'
     'getinfo.R'
     'bdei.R'
+    'bdei_pomp.R'
     'bdss.R'
+<<<<<<< HEAD
     'cblv.R'
+=======
+    'bdss_pomp.R'
+>>>>>>> 7ac5a06 (added bdei_pomp.c, bdss_pomp.c, bdei_pomp.R, bdss_pomp.R + namespace changes)
     'curtail.R'
     'plot.R'
     'diagram.R'

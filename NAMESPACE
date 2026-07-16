@@ -21,7 +21,12 @@ export("%dopar%")
 export(as.yaml)
 export(bake)
 export(ballGrob)
+<<<<<<< HEAD
 export(cblv)
+=======
+export(bdei_pomp)
+export(bdss_pomp)
+>>>>>>> 7ac5a06 (added bdei_pomp.c, bdss_pomp.c, bdei_pomp.R, bdss_pomp.R + namespace changes)
 export(continueBDEI)
 export(continueBDSS)
 export(continueLBDP)
