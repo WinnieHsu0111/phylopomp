@@ -361,5 +361,18 @@ void seirs_dmeas
  double t
  ) {
   assert(!ISNAN(ll));
+
+  // MAP: uniform rectangular prior box check
+  double R0_val = Beta / gamma;
+  double p_samp = chi / (gamma + chi);
+  if (R0_val < 1.2 || R0_val > 10.0 ||
+      sigma < 0.2 || sigma > 5.0 ||
+      gamma < 0.2 || gamma > 5.0 ||
+      p_samp < 0.01 || p_samp > 0.7 ||
+      omega < 0.01 || omega > 0.5) {
+    lik = (give_log) ? R_NegInf : 0.0;
+    return;
+  }
+
   lik = (give_log) ? ll : exp(ll);
 }
