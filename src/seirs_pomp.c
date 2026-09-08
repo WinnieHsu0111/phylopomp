@@ -346,20 +346,25 @@ void seirs_gill
 # define lik  (__lik[0])
 
 // Log-prior for MAP: uniform rectangular prior
-static double seirs_log_prior (double _Beta, double _sigma, double _gamma,
-                                double _chi, double _omega) {
-  double R0_val = _Beta / _gamma;
-  double p = _chi / (_gamma + _chi);
+static double seirs_log_prior
+(
+ const double *__p,
+ const int *__parindex
+ ) {
+  double R0_val = Beta / gamma;
+  double p = chi / (gamma + chi);
   if (R0_val < 1.2 || R0_val > 10.0 ||
-      _sigma < 0.2 || _sigma > 5.0 ||
-      _gamma < 0.2 || _gamma > 5.0 ||
+      sigma < 0.2 || sigma > 5.0 ||
+      gamma < 0.2 || gamma > 5.0 ||
       p < 0.01 || p > 0.7 ||
-      _omega < 0.01 || _omega > 0.5) {
+      omega < 0.01 || omega > 0.5) {
     return R_NegInf;
   }
   return -log(10.0 - 1.2) - log(5.0 - 0.2) - log(5.0 - 0.2)
-         -log(0.7 - 0.01) - log(0.5 - 0.01);
+    -log(0.7 - 0.01) - log(0.5 - 0.01);
 }
+
+#define LOGPRIOR (seirs_log_prior(__p,__parindex))
 
 //! Measurement model likelihood (dmeasure).
 void seirs_dmeas
@@ -377,8 +382,6 @@ void seirs_dmeas
  double t
  ) {
   assert(!ISNAN(ll));
-
-  double lp = ll + seirs_log_prior(Beta, sigma, gamma, chi, omega);
-
+  double lp = ll + LOGPRIOR;
   lik = (give_log) ? lp : exp(lp);
 }
